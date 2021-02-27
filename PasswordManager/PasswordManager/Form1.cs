@@ -33,10 +33,9 @@ namespace PasswordManager
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Program.passwordBook.passwordData.Clear();
-            dataGridView1.Rows.Clear();
-
             
+            dataGridView1.Rows.Clear();
+            Program.passwordBook.clearPasswords();
             Program.passwordBook.LoadPasswordsFromCSV(Program.passwordListPath);
             insertDataToGridView(Program.passwordBook.passwordData, dataGridView1);
             updatePasswordsView();
