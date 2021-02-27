@@ -1,6 +1,6 @@
 ﻿namespace PasswordManager
 {
-    partial class Add_Password
+    partial class Add_Password_Form
     {
         /// <summary>
         /// Required designer variable.

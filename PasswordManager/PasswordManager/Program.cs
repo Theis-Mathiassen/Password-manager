@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +11,8 @@ namespace PasswordManager
     {
         static internal PasswordBook passwordBook;
         static internal string passwordListPath;
-
+        static internal string[] CommentTokens;
+        static internal string[] delimiters;
         static internal Form1 mainForm;
         /// <summary>
         /// The main entry point for the application.
@@ -18,6 +20,9 @@ namespace PasswordManager
         [STAThread]
         static void Main()
         {
+
+            CommentTokens = new string[] { "#" };
+            delimiters = new string[] { ";" };
             passwordBook = new PasswordBook();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -70,6 +75,27 @@ namespace PasswordManager
         {
             int id = GetNewId();
             passwordData.Add(new Credential(serviceName, email, password, note, id));
+        }
+        internal void LoadPasswordsFromCSV(string path)
+        {
+            using (TextFieldParser csvParser = new TextFieldParser(path))
+            {
+                csvParser.CommentTokens = Program.CommentTokens;
+                csvParser.SetDelimiters(Program.delimiters);
+                csvParser.HasFieldsEnclosedInQuotes = true;
+                //Read Headers
+                csvParser.ReadFields();
+                while (!csvParser.EndOfData)
+                {
+                    // Read current line fields, pointer moves to the next line.
+                    string[] fields = csvParser.ReadFields();
+                    passwordData.Add(new Credential(fields[1], fields[2], fields[3], fields[4], int.Parse(fields[0])));
+                }
+            }
+        }
+        internal void clearPasswords ()
+        {
+            passwordData.Clear();
         }
     }
     /// <summary>

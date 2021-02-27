@@ -14,19 +14,16 @@ namespace PasswordManager
     public partial class Form1 : Form
     {
         
-        private string[] CommentTokens;
-        private string[] delimiters;
+        
         
 
-        private Add_Password newPasswordForm;
+        private Add_Password_Form newPasswordForm;
 
         public Form1()
         {
             InitializeComponent();
             Program.passwordListPath = @"C:\test\data.csv";
-            CommentTokens = new string[] { "#" };
-            delimiters = new string[] { ";" };
-            newPasswordForm = new Add_Password ();
+            newPasswordForm = new Add_Password_Form ();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -39,31 +36,13 @@ namespace PasswordManager
             Program.passwordBook.passwordData.Clear();
             dataGridView1.Rows.Clear();
 
-            Program.passwordBook.passwordData = getPasswordsFromCSV(Program.passwordListPath);
+            
+            Program.passwordBook.LoadPasswordsFromCSV(Program.passwordListPath);
             insertDataToGridView(Program.passwordBook.passwordData, dataGridView1);
             updatePasswordsView();
         }
 
-        private List<Credential> getPasswordsFromCSV (string path)
-        {
-            List<Credential> passwords = new List<Credential>();
-            using (TextFieldParser csvParser = new TextFieldParser(path))
-            {
-                csvParser.CommentTokens = CommentTokens;
-                csvParser.SetDelimiters(delimiters);
-                csvParser.HasFieldsEnclosedInQuotes = true;
-                bool matchingHeaders = CheckMatchingHeaders(csvParser.ReadFields(), dataGridView1);
-                int i = 0;
-                while (!csvParser.EndOfData)
-                {
-                    // Read current line fields, pointer moves to the next line.
-                    string[] fields = csvParser.ReadFields();
-                    passwords.Add(new Credential(fields[1], fields[2], fields[3], fields[4], int.Parse(fields[0])));
-                    i++;
-                }
-            }
-            return passwords;
-        }
+        
 
         public void updatePasswordsView ()
         {
