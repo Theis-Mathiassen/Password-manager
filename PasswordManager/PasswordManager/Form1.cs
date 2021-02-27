@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.VisualBasic.FileIO;
 
 namespace PasswordManager
 {
@@ -28,14 +27,17 @@ namespace PasswordManager
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            Console.WriteLine(dataGridView1.SelectedRows[0]);
+            //Console.WriteLine(dataGridView1.SelectedRows[0]);
         }
-
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Program.passwordBook.SavePasswordsToCSV(@"C:\test\data.csv");
+        }
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
             dataGridView1.Rows.Clear();
-            Program.passwordBook.clearPasswords();
+            Program.passwordBook.ClearPasswords();
             Program.passwordBook.LoadPasswordsFromCSV(Program.passwordListPath);
             insertDataToGridView(Program.passwordBook.passwordData, dataGridView1);
             updatePasswordsView();
@@ -103,5 +105,7 @@ namespace PasswordManager
             newPasswordForm.Show();
             
         }
+
+        
     }
 }
