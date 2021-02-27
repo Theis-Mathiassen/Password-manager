@@ -34,15 +34,19 @@
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.programToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newPasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editPasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removePasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.readMeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Service = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Note = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.programToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.readMeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -52,6 +56,7 @@
             this.dataGridView1.AllowUserToOrderColumns = true;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID,
             this.Service,
             this.Email,
             this.Password,
@@ -105,6 +110,50 @@
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.saveToolStripMenuItem.Text = "Save";
             // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // programToolStripMenuItem
+            // 
+            this.programToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newPasswordToolStripMenuItem,
+            this.editPasswordToolStripMenuItem,
+            this.removePasswordToolStripMenuItem,
+            this.settingsToolStripMenuItem});
+            this.programToolStripMenuItem.Name = "programToolStripMenuItem";
+            this.programToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
+            this.programToolStripMenuItem.Text = "Vault";
+            this.programToolStripMenuItem.Click += new System.EventHandler(this.programToolStripMenuItem_Click);
+            // 
+            // newPasswordToolStripMenuItem
+            // 
+            this.newPasswordToolStripMenuItem.Name = "newPasswordToolStripMenuItem";
+            this.newPasswordToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.newPasswordToolStripMenuItem.Text = "New password";
+            this.newPasswordToolStripMenuItem.Click += new System.EventHandler(this.newPasswordToolStripMenuItem_Click);
+            // 
+            // editPasswordToolStripMenuItem
+            // 
+            this.editPasswordToolStripMenuItem.Name = "editPasswordToolStripMenuItem";
+            this.editPasswordToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.editPasswordToolStripMenuItem.Text = "Edit password";
+            // 
+            // removePasswordToolStripMenuItem
+            // 
+            this.removePasswordToolStripMenuItem.Name = "removePasswordToolStripMenuItem";
+            this.removePasswordToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.removePasswordToolStripMenuItem.Text = "Remove password";
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -112,6 +161,18 @@
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // readMeToolStripMenuItem
+            // 
+            this.readMeToolStripMenuItem.Name = "readMeToolStripMenuItem";
+            this.readMeToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
+            this.readMeToolStripMenuItem.Text = "Read me";
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
             // 
             // Service
             // 
@@ -136,33 +197,6 @@
             this.Note.HeaderText = "Note";
             this.Note.Name = "Note";
             this.Note.ReadOnly = true;
-            // 
-            // programToolStripMenuItem
-            // 
-            this.programToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.settingsToolStripMenuItem});
-            this.programToolStripMenuItem.Name = "programToolStripMenuItem";
-            this.programToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
-            this.programToolStripMenuItem.Text = "Program";
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            // 
-            // readMeToolStripMenuItem
-            // 
-            this.readMeToolStripMenuItem.Name = "readMeToolStripMenuItem";
-            this.readMeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.readMeToolStripMenuItem.Text = "Read me";
-            // 
-            // exitToolStripMenuItem
-            // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -191,14 +225,18 @@
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Service;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Email;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Password;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Note;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem programToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem readMeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newPasswordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editPasswordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removePasswordToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Service;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Email;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Password;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Note;
     }
 }
 

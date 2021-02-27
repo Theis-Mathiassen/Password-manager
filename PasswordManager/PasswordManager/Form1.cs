@@ -13,82 +13,117 @@ namespace PasswordManager
 {
     public partial class Form1 : Form
     {
-        private string passwordListPath;
+        
         private string[] CommentTokens;
         private string[] delimiters;
-        private List<List<string>> passwordData;
+        
+
+        private Add_Password newPasswordForm;
 
         public Form1()
         {
             InitializeComponent();
-            passwordListPath = @"C:\test\data.csv";
+            Program.passwordListPath = @"C:\test\data.csv";
             CommentTokens = new string[] { "#" };
             delimiters = new string[] { ";" };
-            passwordData = new List<List<string>>();
+            newPasswordForm = new Add_Password ();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            Console.WriteLine(dataGridView1.SelectedRows[0]);
         }
 
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            passwordData.Clear();
-            using (TextFieldParser csvParser = new TextFieldParser(passwordListPath))
+            Program.passwordBook.passwordData.Clear();
+            dataGridView1.Rows.Clear();
+
+            Program.passwordBook.passwordData = getPasswordsFromCSV(Program.passwordListPath);
+            insertDataToGridView(Program.passwordBook.passwordData, dataGridView1);
+            updatePasswordsView();
+        }
+
+        private List<Credential> getPasswordsFromCSV (string path)
+        {
+            List<Credential> passwords = new List<Credential>();
+            using (TextFieldParser csvParser = new TextFieldParser(path))
             {
                 csvParser.CommentTokens = CommentTokens;
                 csvParser.SetDelimiters(delimiters);
                 csvParser.HasFieldsEnclosedInQuotes = true;
+                bool matchingHeaders = CheckMatchingHeaders(csvParser.ReadFields(), dataGridView1);
                 int i = 0;
                 while (!csvParser.EndOfData)
                 {
                     // Read current line fields, pointer moves to the next line.
                     string[] fields = csvParser.ReadFields();
-                    passwordData.Add(fields.ToList());
+                    passwords.Add(new Credential(fields[1], fields[2], fields[3], fields[4], int.Parse(fields[0])));
                     i++;
                 }
             }
-            dataGridView1.Rows.Clear();
-            insertDataToGridView(passwordData, dataGridView1);
+            return passwords;
         }
 
-        private void insertDataToGridView (List<List<string>> data, DataGridView gridView)
+        public void updatePasswordsView ()
+        {
+            dataGridView1.Rows.Clear();
+            if (Program.passwordBook.passwordData.Count > 0)
+            {
+                CheckMatchingHeaders(Program.passwordBook.passwordData[0].ToStringArray(), dataGridView1);
+                for (int i = 0; i < Program.passwordBook.passwordData.Count; i++)
+                {
+                    dataGridView1.Rows.Add(Program.passwordBook.passwordData[i].ToStringArray());
+                }
+            }
+        }
+
+        private void insertDataToGridView (List<Credential> data, DataGridView gridView)
         {
             if (data.Count > 0)
             {
-                CheckMatchingHeaders(data[0], gridView);
+                CheckMatchingHeaders(data[0].ToStringArray(), gridView);
                 for (int i = 1; i < data.Count; i++)
                 {
-                    gridView.Rows.Add(data[i].ToArray());
+                    gridView.Rows.Add(data[i].ToStringArray());
                 }
             }
-            
-
-            //data[0].Count;
-            //gridView.Columns.re 
-            
-            
-
-
-            //gridView.Rows[dataGridView1.Rows.GetRowCount(DataGridViewElementStates.None) - 1].Cells[0].Value = "Hej";
         }
-        private bool CheckMatchingHeaders (List<string> FileHeaders, DataGridView dataGridView)
+        private bool CheckMatchingHeaders (string[] FileHeaders, DataGridView dataGridView)
         {
             bool result = true;
-            for (int i = 0; i < FileHeaders.Count; i++)
+            if (FileHeaders.Length == dataGridView.Columns.GetColumnCount(DataGridViewElementStates.None))
             {
-                if (false == (FileHeaders[i] == dataGridView.Columns[i].Name))
+                for (int i = 0; i < FileHeaders.Length; i++)
                 {
-                    result = false;
-                } 
+                    if (false == (FileHeaders[i] == dataGridView.Columns[i].Name))
+                    {
+                        result = false;
+                    }
+                }
             }
+            else
+            {
+                result = false;
+            }
+            
             return result;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.Application.Exit();
+        }
+
+        private void programToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void newPasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newPasswordForm.Show();
+            
         }
     }
 }
