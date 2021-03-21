@@ -34,110 +34,6 @@ namespace PasswordManager
             Application.Run(mainForm);
         }
 
-        internal static byte[] EncryptStringToBytes_Aes(string plainText, byte[] Key, byte[] IV)
-        {
-            // Check arguments.
-            if (plainText == null || plainText.Length <= 0)
-                throw new ArgumentNullException("plainText");
-            if (Key == null || Key.Length <= 0)
-                throw new ArgumentNullException("Key");
-            if (IV == null || IV.Length <= 0)
-                throw new ArgumentNullException("IV");
-            byte[] encrypted;
-
-            // Create an Aes object
-            // with the specified key and IV.
-            using (Aes aesAlg = Aes.Create())
-            {
-                aesAlg.Key = Key;
-                aesAlg.IV = IV;
-
-                // Create an encryptor to perform the stream transform.
-                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-
-                // Create the streams used for encryption.
-                using (MemoryStream msEncrypt = new MemoryStream())
-                {
-                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-                    {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                        {
-                            //Write all data to the stream.
-                            swEncrypt.Write(plainText);
-                        }
-                        encrypted = msEncrypt.ToArray();
-                    }
-                }
-            }
-
-            // Return the encrypted bytes from the memory stream.
-            return encrypted;
-        }
-        internal static string DecryptStringFromBytes_Aes(byte[] cipherText, byte[] Key, byte[] IV)
-        {
-            // Check arguments.
-            if (cipherText == null || cipherText.Length <= 0)
-                throw new ArgumentNullException("cipherText");
-            if (Key == null || Key.Length <= 0)
-                throw new ArgumentNullException("Key");
-            if (IV == null || IV.Length <= 0)
-                throw new ArgumentNullException("IV");
-
-            // Declare the string used to hold
-            // the decrypted text.
-            string plaintext = null;
-
-            // Create an Aes object
-            // with the specified key and IV.
-            using (Aes aesAlg = Aes.Create())
-            {
-                aesAlg.Key = Key;
-                aesAlg.IV = IV;
-
-                // Create a decryptor to perform the stream transform.
-                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-
-                // Create the streams used for decryption.
-                using (MemoryStream msDecrypt = new MemoryStream(cipherText))
-                {
-                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-                    {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
-                        {
-
-                            // Read the decrypted bytes from the decrypting stream
-                            // and place them in a string.
-                            plaintext = srDecrypt.ReadToEnd();
-                        }
-                    }
-                }
-            }
-
-            return plaintext;
-        }
-
-
-
-        static internal byte[][] GetHashKeys(string key)
-        {
-            byte[][] result = new byte[2][];
-            Encoding enc = Encoding.UTF8;
-
-            SHA256 sha2 = new SHA256CryptoServiceProvider();
-
-            byte[] rawKey = enc.GetBytes(key);
-            byte[] rawIV = enc.GetBytes(key);
-
-            byte[] hashKey = sha2.ComputeHash(rawKey);
-            byte[] hashIV = sha2.ComputeHash(rawIV);
-
-            Array.Resize(ref hashIV, 16);
-
-            result[0] = hashKey;
-            result[1] = hashIV;
-
-            return result;
-        }
     }
     
 
@@ -188,10 +84,17 @@ namespace PasswordManager
             int id = GetNewId();
             passwordData.Add(new Credential(serviceName, email, password, note, id));
         }
-        internal void LoadPasswordsFromCSV(string path)
+
+        internal void LoadPasswordsFromString(string[] var)
         {
             modified = false;
-            using (TextFieldParser csvParser = new TextFieldParser(path))
+            for (int i = 0; i < var.Length; i++)
+            {
+                string[] password = var[i].Split(); //Use JSON
+            }
+
+
+            using (TextFieldParser csvParser = new TextFieldParser()
             {
                 csvParser.CommentTokens = Program.CommentTokens;
                 csvParser.SetDelimiters(Program.delimiters);
@@ -211,76 +114,38 @@ namespace PasswordManager
             modified = true;
             passwordData.Clear();
         }
-        internal void SavePasswordsToCSV (string path)
+        internal string SavePasswordsToString()
         {
-            using (StreamWriter streamWriter = new StreamWriter(path))
+            string result = "";
+            string del = Program.delimiters[0];
+            result += "id" + del + "service name" + del + "email" + del + "password" + del + "note" + "\n";
+            for (int i = 0; i < passwordData.Count; i++)
             {
-                string del = Program.delimiters[0];
-                streamWriter.WriteLine("id" + del + "service name" + del + "email" + del + "password" + del + "note");
-                for (int i = 0; i < passwordData.Count; i++)
+                string[] password = passwordData[i].ToStringArray();
+                string passwordFileEntry = "";
+                for (int j = 0; j < password.Length; j++)
                 {
-                    string[] password = passwordData[i].ToStringArray();
-                    string passwordFileEntry = "";
-                    for (int j = 0; j < password.Length; j++)
+                    if (password[j].Contains("\""))
                     {
-                        if (password[j].Contains("\""))
-                        {
-                            password[j] = password[j].Replace("\"", "\"\"");
-                        }
-                        if (password[j].Contains(del))
-                        {
-                            password[j] = "\"" + password[j] + "\"";
-                        }
-                        
-                        if (j == password.Length)
-                        {
-                            passwordFileEntry += password[j];
-                        }
-                        else
-                        {
-                            passwordFileEntry += password[j] + del;
-                        }
+                        password[j] = password[j].Replace("\"", "\"\"");
                     }
-                    streamWriter.WriteLine(passwordFileEntry);
+                    if (password[j].Contains(del))
+                    {
+                        password[j] = "\"" + password[j] + "\"";
+                    }
+
+                    if (j == password.Length)
+                    {
+                        passwordFileEntry += password[j];
+                    }
+                    else
+                    {
+                        passwordFileEntry += password[j] + del;
+                    }
                 }
-
-
-
-
-                string original = "Here is some data to encrypt!";
-
-                // Create a new instance of the Aes
-                // class.  This generates a new key and initialization
-                // vector (IV).
-                TripleDESCryptoServiceProvider tdes = new TripleDESCryptoServiceProvider();
-                using (Aes myAes = Aes.Create())
-                {
-                    
-                    myAes.KeySize = 256;
-                    string password = "qwerty";
-                    
-                    SHA256 
-
-
-
-                    // Encrypt the string to an array of bytes.
-                    byte[] encrypted = Program.EncryptStringToBytes_Aes(original, myAes.Key, myAes.IV);
-
-                    // Decrypt the bytes to a string.
-                    string roundtrip = Program.DecryptStringFromBytes_Aes(encrypted, myAes.Key, myAes.IV);
-
-                    //Display the original data and the decrypted data.
-                    Console.WriteLine("Original:   {0}", original);
-                    //Console.WriteLine("Round Trip: {0}", roundtrip);
-
-                    Console.WriteLine("KeySize: " + myAes.KeySize);
-                    Console.WriteLine("BlockSize: " + myAes.BlockSize);
-                    Console.WriteLine("Key: " + myAes.Key);
-                    Console.WriteLine("IV: " + myAes.IV);
-                }
-
+                result += passwordFileEntry + "\n";
             }
-            
+            return result;
         }
     }
     /// <summary>
