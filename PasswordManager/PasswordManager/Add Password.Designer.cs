@@ -48,7 +48,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.ShowPasswordButton = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
             this.CopyPasswordToClipboard = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -97,7 +96,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 331);
+            this.label4.Location = new System.Drawing.Point(12, 296);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(30, 13);
             this.label4.TabIndex = 4;
@@ -128,7 +127,7 @@
             this.textBoxNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxNote.Location = new System.Drawing.Point(130, 331);
+            this.textBoxNote.Location = new System.Drawing.Point(130, 296);
             this.textBoxNote.Multiline = true;
             this.textBoxNote.Name = "textBoxNote";
             this.textBoxNote.Size = new System.Drawing.Size(297, 176);
@@ -149,7 +148,6 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.label6);
@@ -159,9 +157,9 @@
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.trackBar1);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Location = new System.Drawing.Point(12, 94);
+            this.groupBox1.Location = new System.Drawing.Point(12, 123);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(415, 216);
+            this.groupBox1.Size = new System.Drawing.Size(415, 161);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Password settings";
@@ -184,9 +182,11 @@
             this.trackBar1.LargeChange = 10;
             this.trackBar1.Location = new System.Drawing.Point(118, 20);
             this.trackBar1.Maximum = 50;
+            this.trackBar1.Minimum = 6;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(240, 45);
             this.trackBar1.TabIndex = 1;
+            this.trackBar1.Value = 8;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // trackBar3
@@ -262,26 +262,17 @@
             // ShowPasswordButton
             // 
             this.ShowPasswordButton.AutoSize = true;
-            this.ShowPasswordButton.Location = new System.Drawing.Point(393, 65);
+            this.ShowPasswordButton.Location = new System.Drawing.Point(395, 71);
             this.ShowPasswordButton.Name = "ShowPasswordButton";
             this.ShowPasswordButton.Size = new System.Drawing.Size(34, 13);
             this.ShowPasswordButton.TabIndex = 10;
             this.ShowPasswordButton.Text = "Show";
             this.ShowPasswordButton.Click += new System.EventHandler(this.ShowPasswordButton_Click);
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(313, 173);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 11;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            // 
             // CopyPasswordToClipboard
             // 
             this.CopyPasswordToClipboard.AutoSize = true;
-            this.CopyPasswordToClipboard.Location = new System.Drawing.Point(393, 78);
+            this.CopyPasswordToClipboard.Location = new System.Drawing.Point(395, 94);
             this.CopyPasswordToClipboard.Name = "CopyPasswordToClipboard";
             this.CopyPasswordToClipboard.Size = new System.Drawing.Size(31, 13);
             this.CopyPasswordToClipboard.TabIndex = 11;
@@ -338,7 +329,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label ShowPasswordButton;
         private System.Windows.Forms.Label CopyPasswordToClipboard;
     }

@@ -15,6 +15,7 @@ namespace PasswordManager
 {
     static class Program
     {
+        internal const string MasterPassword = "Master";
         static internal PasswordBook passwordBook;
         static internal string passwordListPath;
         static internal Form1 mainForm;
@@ -31,6 +32,56 @@ namespace PasswordManager
             Application.Run(mainForm);
         }
 
+        internal static string generatePassword(int length, int numberCount, int symbolCount)
+        {
+            string result = "";
+            try
+            {
+                Random rand = new Random();
+                char[] password = new char[length];
+                List<int> remainingIndex = new List<int>();
+                for (int i = 0; i < length; i++)
+                {
+                    remainingIndex.Add(i);
+                }
+                for (int i = 0; i < numberCount; i++)
+                {
+                    int var = rand.Next(48, 58);
+                    int index = rand.Next(0, remainingIndex.Count);
+                    password[remainingIndex[index]] = (char)var;
+                    remainingIndex.RemoveAt(index);
+                }
+                for (int i = 0; i < symbolCount; i++)
+                {
+                    int var = rand.Next(33, 65);
+                    if (var >= 48 && var <= 57) { var += 10; }
+                    if (var >= 65 && var <= 90) { var += 26; }
+                    if (var >= 97 && var <= 101) { var += 26; }
+                    int index = rand.Next(0, remainingIndex.Count);
+                    password[remainingIndex[index]] = (char)var;
+                    remainingIndex.RemoveAt(index);
+                }
+                while (remainingIndex.Count > 0)
+                {
+                    int var = rand.Next(65, 117);
+                    if (var >= 91 && var <= 96) { var += 6; }
+                    int index = rand.Next(0, remainingIndex.Count);
+                    password[remainingIndex[index]] = (char)var;
+                    remainingIndex.RemoveAt(index);
+                }
+                for (int i = 0; i < password.Length; i++)
+                {
+                    result += password[i];
+                }
+            }
+            catch (IndexOutOfRangeException ex)
+            {
+                Console.WriteLine("Error to many symbols");
+            }
+            
+            return result;
+        }
+        
     }
     
 
@@ -81,25 +132,36 @@ namespace PasswordManager
             int id = GetNewId();
             passwordData.Add(new Credential(serviceName, email, password, note, id));
         }
-        internal void SavePasswordsToJSONFile (string path)
-        {
-            File.WriteAllText(path, SavePasswordsToString());
-        }
-        internal void LoadPasswordsFromJSONFile(string path)
-        {
-            modified = false;
-            string JSONString = File.ReadAllText(path);
-            passwordData = JsonConvert.DeserializeObject<List<Credential>>(JSONString);
-        }
+        
+        
         internal void ClearPasswords ()
         {
             modified = true;
             passwordData.Clear();
         }
-        internal string SavePasswordsToString()
+        internal string SavePasswordsToJSON()
         {
             string result = JsonConvert.SerializeObject(passwordData);
             return result;
+        }
+        internal void LoadPasswordsFromJSON (string JSONString)
+        {
+            passwordData = JsonConvert.DeserializeObject<List<Credential>>(JSONString);
+        }
+
+        internal void SavePasswordsToFile(string path)
+        {
+            string JSONText = SavePasswordsToJSON();
+            string encryptedPasswords = SecurityController.Encrypt(Program.MasterPassword, JSONText);
+            File.WriteAllText(@"C:\test\unencrypted.JSON", JSONText);
+            File.WriteAllText(path, encryptedPasswords);
+        }
+        internal void LoadPasswordsFromFile(string path)
+        {
+            modified = false;
+            string encryptedString = File.ReadAllText(path);
+            string JSONString = SecurityController.Decrypt(Program.MasterPassword, encryptedString);
+            LoadPasswordsFromJSON(JSONString);
         }
     }
     /// <summary>

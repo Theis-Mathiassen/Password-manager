@@ -22,7 +22,7 @@ namespace PasswordManager
         {
             InitializeComponent();
             Program.passwordListPath = @"C:\test\data.JSON";
-            newPasswordForm = new Add_Password_Form ();
+            
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -31,14 +31,13 @@ namespace PasswordManager
         }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Program.passwordBook.SavePasswordsToJSONFile(Program.passwordListPath);
+            Program.passwordBook.SavePasswordsToFile(Program.passwordListPath);
         }
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
             dataGridView1.Rows.Clear();
             Program.passwordBook.ClearPasswords();
-            Program.passwordBook.LoadPasswordsFromJSONFile(Program.passwordListPath);
+            Program.passwordBook.LoadPasswordsFromFile(Program.passwordListPath);
             insertDataToGridView(Program.passwordBook.passwordData, dataGridView1);
             updatePasswordsView();
         }
@@ -50,7 +49,6 @@ namespace PasswordManager
             dataGridView1.Rows.Clear();
             if (Program.passwordBook.passwordData.Count > 0)
             {
-                CheckMatchingHeaders(Program.passwordBook.passwordData[0].ToStringArray(), dataGridView1);
                 for (int i = 0; i < Program.passwordBook.passwordData.Count; i++)
                 {
                     dataGridView1.Rows.Add(Program.passwordBook.passwordData[i].ToStringArray());
@@ -62,32 +60,11 @@ namespace PasswordManager
         {
             if (data.Count > 0)
             {
-                //CheckMatchingHeaders(data[0].ToStringArray(), gridView);
                 for (int i = 1; i < data.Count; i++)
                 {
                     gridView.Rows.Add(data[i].ToStringArray());
                 }
             }
-        }
-        private bool CheckMatchingHeaders (string[] FileHeaders, DataGridView dataGridView)
-        {
-            bool result = true;
-            if (FileHeaders.Length == dataGridView.Columns.GetColumnCount(DataGridViewElementStates.None))
-            {
-                for (int i = 0; i < FileHeaders.Length; i++)
-                {
-                    if (false == (FileHeaders[i] == dataGridView.Columns[i].Name))
-                    {
-                        result = false;
-                    }
-                }
-            }
-            else
-            {
-                result = false;
-            }
-            
-            return result;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -102,8 +79,8 @@ namespace PasswordManager
 
         private void newPasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            newPasswordForm = new Add_Password_Form();
             newPasswordForm.Show();
-            
         }
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)

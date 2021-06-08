@@ -17,6 +17,12 @@ namespace PasswordManager
             InitializeComponent();
         }
 
+        void generatePassword ()
+        {
+            string tempPassword = Program.generatePassword(trackBar1.Value, trackBar3.Value, trackBar4.Value);
+            textBoxPassword.Text = tempPassword;
+        }
+
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -57,20 +63,26 @@ namespace PasswordManager
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            label6.Text = trackBar1.Value.ToString();
-            trackBar3.Maximum = trackBar1.Value;
-            trackBar4.Maximum = trackBar1.Value;
+            PasswordTrackBarUpdate();
         }
 
         private void trackBar3_Scroll(object sender, EventArgs e)
         {
-            label9.Text = trackBar3.Value.ToString();
-            trackBar4.Maximum = trackBar1.Value - trackBar3.Value;
+            PasswordTrackBarUpdate();
         }
 
         private void trackBar4_Scroll(object sender, EventArgs e)
         {
+            PasswordTrackBarUpdate();
+        }
+        private void PasswordTrackBarUpdate ()
+        {
+            trackBar3.Maximum = trackBar1.Value;
+            trackBar4.Maximum = trackBar1.Value - trackBar3.Value;
+            label6.Text = trackBar1.Value.ToString();
+            label9.Text = trackBar3.Value.ToString();
             label10.Text = trackBar4.Value.ToString();
+            generatePassword();
         }
 
         private void ShowPasswordButton_Click(object sender, EventArgs e)
@@ -96,6 +108,11 @@ namespace PasswordManager
         private void textBoxPassword_TextChanged(object sender, EventArgs e)
         {
             CopyPasswordToClipboard.Text = "Copy";
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
