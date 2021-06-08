@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Numerics;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PasswordManager
 {
@@ -15,8 +17,6 @@ namespace PasswordManager
     {
         static internal PasswordBook passwordBook;
         static internal string passwordListPath;
-        static internal string[] CommentTokens;
-        static internal string[] delimiters;
         static internal Form1 mainForm;
         /// <summary>
         /// The main entry point for the application.
@@ -24,9 +24,6 @@ namespace PasswordManager
         [STAThread]
         static void Main()
         {
-
-            CommentTokens = new string[] { "#" };
-            delimiters = new string[] { ";" };
             passwordBook = new PasswordBook();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -78,36 +75,21 @@ namespace PasswordManager
             }
             return tempID;
         }
-        public void AddPassword (string serviceName, string email, string password, string note)
+        internal void AddPassword (string serviceName, string email, string password, string note)
         {
             modified = true;
             int id = GetNewId();
             passwordData.Add(new Credential(serviceName, email, password, note, id));
         }
-
-        internal void LoadPasswordsFromString(string[] var)
+        internal void SavePasswordsToJSONFile (string path)
+        {
+            File.WriteAllText(path, SavePasswordsToString());
+        }
+        internal void LoadPasswordsFromJSONFile(string path)
         {
             modified = false;
-            for (int i = 0; i < var.Length; i++)
-            {
-                string[] password = var[i].Split(); //Use JSON
-            }
-
-
-            using (TextFieldParser csvParser = new TextFieldParser()
-            {
-                csvParser.CommentTokens = Program.CommentTokens;
-                csvParser.SetDelimiters(Program.delimiters);
-                csvParser.HasFieldsEnclosedInQuotes = true;
-                //Read Headers
-                csvParser.ReadFields();
-                while (!csvParser.EndOfData)
-                {
-                    // Read current line fields, pointer moves to the next line.
-                    string[] fields = csvParser.ReadFields();
-                    passwordData.Add(new Credential(fields[1], fields[2], fields[3], fields[4], int.Parse(fields[0])));
-                }
-            }
+            string JSONString = File.ReadAllText(path);
+            passwordData = JsonConvert.DeserializeObject<List<Credential>>(JSONString);
         }
         internal void ClearPasswords ()
         {
@@ -116,35 +98,7 @@ namespace PasswordManager
         }
         internal string SavePasswordsToString()
         {
-            string result = "";
-            string del = Program.delimiters[0];
-            result += "id" + del + "service name" + del + "email" + del + "password" + del + "note" + "\n";
-            for (int i = 0; i < passwordData.Count; i++)
-            {
-                string[] password = passwordData[i].ToStringArray();
-                string passwordFileEntry = "";
-                for (int j = 0; j < password.Length; j++)
-                {
-                    if (password[j].Contains("\""))
-                    {
-                        password[j] = password[j].Replace("\"", "\"\"");
-                    }
-                    if (password[j].Contains(del))
-                    {
-                        password[j] = "\"" + password[j] + "\"";
-                    }
-
-                    if (j == password.Length)
-                    {
-                        passwordFileEntry += password[j];
-                    }
-                    else
-                    {
-                        passwordFileEntry += password[j] + del;
-                    }
-                }
-                result += passwordFileEntry + "\n";
-            }
+            string result = JsonConvert.SerializeObject(passwordData);
             return result;
         }
     }
@@ -171,8 +125,17 @@ namespace PasswordManager
             this.Password = password;
             this.Note = note;
         }
-
-        void SetRandomPassword (int length = 10)
+        internal string[] ToStringArray ()
+        {
+            string[] result = new string[5];
+            result[0] = Id.ToString();
+            result[1] = ServiceName;
+            result[2] = Email;
+            result[3] = Password;
+            result[4] = Note;
+            return result;
+        }
+        void SetRandomPassword (int length, int letterCount, int numberCount, int symbolCount)
         {
             Random rand = new Random();
             Password = "";
@@ -180,18 +143,6 @@ namespace PasswordManager
             {
                 Password = Password + (char)rand.Next(33, 122);
             }
-        }
-
-        internal string[] ToStringArray ()
-        {
-            string[] result = {
-                Id.ToString(),
-                ServiceName,
-                Email,
-                Password,
-                Note
-            };
-            return result;
         }
     }
 }

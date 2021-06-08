@@ -21,7 +21,7 @@ namespace PasswordManager
         public Form1()
         {
             InitializeComponent();
-            Program.passwordListPath = @"C:\test\data.csv";
+            Program.passwordListPath = @"C:\test\data.JSON";
             newPasswordForm = new Add_Password_Form ();
         }
 
@@ -31,14 +31,14 @@ namespace PasswordManager
         }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Program.passwordBook.SavePasswordsToCSV(@"C:\test\data.csv");
+            Program.passwordBook.SavePasswordsToJSONFile(Program.passwordListPath);
         }
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
             dataGridView1.Rows.Clear();
             Program.passwordBook.ClearPasswords();
-            Program.passwordBook.LoadPasswordsFromCSV(Program.passwordListPath);
+            Program.passwordBook.LoadPasswordsFromJSONFile(Program.passwordListPath);
             insertDataToGridView(Program.passwordBook.passwordData, dataGridView1);
             updatePasswordsView();
         }
@@ -62,7 +62,7 @@ namespace PasswordManager
         {
             if (data.Count > 0)
             {
-                CheckMatchingHeaders(data[0].ToStringArray(), gridView);
+                //CheckMatchingHeaders(data[0].ToStringArray(), gridView);
                 for (int i = 1; i < data.Count; i++)
                 {
                     gridView.Rows.Add(data[i].ToStringArray());
@@ -106,6 +106,14 @@ namespace PasswordManager
             
         }
 
-        
+        private void fileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
