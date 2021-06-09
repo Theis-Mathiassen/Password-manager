@@ -12,16 +12,25 @@ namespace PasswordManager
 {
     public partial class Add_Password_Form : Form
     {
+        public String password {
+            get
+            {
+                return _password;
+            }
+            set
+            {
+                _password = value;
+                textBoxPassword.Text = value;
+            }
+        }
+        public String _password;
+
         public Add_Password_Form()
         {
             InitializeComponent();
         }
 
-        void generatePassword ()
-        {
-            string tempPassword = Program.generatePassword(trackBar1.Value, trackBar3.Value, trackBar4.Value);
-            textBoxPassword.Text = tempPassword;
-        }
+        
 
         private void label1_Click(object sender, EventArgs e)
         {
@@ -31,7 +40,15 @@ namespace PasswordManager
         private void button1_Click(object sender, EventArgs e)
         {
             int id = Program.passwordBook.GetNewId();
-            Program.passwordBook.AddPassword(textBoxWebService.Text, textBoxEmail.Text, textBoxPassword.Text, textBoxNote.Text);
+            if (CheckBoxExpire.Checked)
+            {
+                Program.passwordBook.AddPassword(textBoxWebService.Text, textBoxEmail.Text, textBoxPassword.Text, textBoxPincode.Text, textBoxNote.Text, dateTimePickerExpiryDate.Value);
+            }
+            else
+            {
+                Program.passwordBook.AddPassword(textBoxWebService.Text, textBoxEmail.Text, textBoxPassword.Text, textBoxPincode.Text, textBoxNote.Text);
+            }
+            
             Program.mainForm.updatePasswordsView();
             this.Hide();
         }
@@ -63,27 +80,19 @@ namespace PasswordManager
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            PasswordTrackBarUpdate();
+            //PasswordTrackBarUpdate();
         }
 
         private void trackBar3_Scroll(object sender, EventArgs e)
         {
-            PasswordTrackBarUpdate();
+            //PasswordTrackBarUpdate();
         }
 
         private void trackBar4_Scroll(object sender, EventArgs e)
         {
-            PasswordTrackBarUpdate();
+            //PasswordTrackBarUpdate();
         }
-        private void PasswordTrackBarUpdate ()
-        {
-            trackBar3.Maximum = trackBar1.Value;
-            trackBar4.Maximum = trackBar1.Value - trackBar3.Value;
-            label6.Text = trackBar1.Value.ToString();
-            label9.Text = trackBar3.Value.ToString();
-            label10.Text = trackBar4.Value.ToString();
-            generatePassword();
-        }
+        
 
         private void ShowPasswordButton_Click(object sender, EventArgs e)
         {
@@ -113,6 +122,29 @@ namespace PasswordManager
         private void button2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CheckBoxExpire.Checked)
+            {
+                dateTimePickerExpiryDate.Enabled = true;
+            }
+            else
+            {
+                dateTimePickerExpiryDate.Enabled = false;
+            }
+        }
+
+        private void buttonConfigurePassword_Click(object sender, EventArgs e)
+        {
+            using (PasswordConfigoration passwordConfigoration = new PasswordConfigoration(textBoxPassword.Text))
+            {
+                if (passwordConfigoration.ShowDialog() == DialogResult.OK)
+                {
+                    textBoxPassword.Text = passwordConfigoration.Password;
+                }
+            }
         }
     }
 }

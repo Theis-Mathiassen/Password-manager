@@ -17,6 +17,7 @@ namespace PasswordManager
         
 
         private Add_Password_Form newPasswordForm;
+        private PasswordShow passwordShowForm;
 
         public Form1()
         {
@@ -27,7 +28,8 @@ namespace PasswordManager
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //Console.WriteLine(dataGridView1.SelectedRows[0]);
+            
+            
         }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -91,6 +93,31 @@ namespace PasswordManager
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void editPasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Int32 selectedCellCount = dataGridView1.GetCellCount(DataGridViewElementStates.Selected);
+            if (selectedCellCount > 0)
+            {
+                DataGridViewRow selectedRow = dataGridView1.Rows[dataGridView1.SelectedCells[selectedCellCount - 1].RowIndex];
+                long CredentialID = Convert.ToInt64(selectedRow.Cells["ID"].Value);
+                Credential selectedCredential = null;
+                foreach (Credential credential in Program.passwordBook.passwordData)
+                {
+                    if (credential.Id == CredentialID)
+                    {
+                        selectedCredential = credential;
+                    }
+                }
+
+                if (selectedCredential != null)
+                {
+                    passwordShowForm = new PasswordShow();
+                    passwordShowForm.Show();
+                }
+            }
+            
         }
     }
 }

@@ -29,11 +29,6 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Service = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,6 +42,14 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readMeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Service = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Note = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExpiryDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Options = new System.Windows.Forms.DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -60,43 +63,16 @@
             this.Service,
             this.Email,
             this.Password,
-            this.Note});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 78);
+            this.Note,
+            this.DateCreated,
+            this.ExpiryDate,
+            this.Options});
+            this.dataGridView1.Location = new System.Drawing.Point(12, 27);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 50;
-            this.dataGridView1.Size = new System.Drawing.Size(776, 112);
+            this.dataGridView1.Size = new System.Drawing.Size(776, 411);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            // 
-            // Service
-            // 
-            this.Service.HeaderText = "Service name";
-            this.Service.Name = "Service";
-            this.Service.ReadOnly = true;
-            // 
-            // Email
-            // 
-            this.Email.HeaderText = "Email";
-            this.Email.Name = "Email";
-            this.Email.ReadOnly = true;
-            // 
-            // Password
-            // 
-            this.Password.HeaderText = "Password";
-            this.Password.Name = "Password";
-            this.Password.ReadOnly = true;
-            // 
-            // Note
-            // 
-            this.Note.HeaderText = "Note";
-            this.Note.Name = "Note";
-            this.Note.ReadOnly = true;
             // 
             // menuStrip1
             // 
@@ -165,26 +141,27 @@
             // newPasswordToolStripMenuItem
             // 
             this.newPasswordToolStripMenuItem.Name = "newPasswordToolStripMenuItem";
-            this.newPasswordToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.newPasswordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.newPasswordToolStripMenuItem.Text = "New password";
             this.newPasswordToolStripMenuItem.Click += new System.EventHandler(this.newPasswordToolStripMenuItem_Click);
             // 
             // editPasswordToolStripMenuItem
             // 
             this.editPasswordToolStripMenuItem.Name = "editPasswordToolStripMenuItem";
-            this.editPasswordToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.editPasswordToolStripMenuItem.Text = "Edit password";
+            this.editPasswordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.editPasswordToolStripMenuItem.Text = "Show password";
+            this.editPasswordToolStripMenuItem.Click += new System.EventHandler(this.editPasswordToolStripMenuItem_Click);
             // 
             // removePasswordToolStripMenuItem
             // 
             this.removePasswordToolStripMenuItem.Name = "removePasswordToolStripMenuItem";
-            this.removePasswordToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.removePasswordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.removePasswordToolStripMenuItem.Text = "Remove password";
             // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // helpToolStripMenuItem
@@ -198,8 +175,58 @@
             // readMeToolStripMenuItem
             // 
             this.readMeToolStripMenuItem.Name = "readMeToolStripMenuItem";
-            this.readMeToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
+            this.readMeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.readMeToolStripMenuItem.Text = "Read me";
+            // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            this.ID.Visible = false;
+            // 
+            // Service
+            // 
+            this.Service.HeaderText = "Service name";
+            this.Service.Name = "Service";
+            this.Service.ReadOnly = true;
+            // 
+            // Email
+            // 
+            this.Email.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Email.HeaderText = "Email";
+            this.Email.Name = "Email";
+            this.Email.ReadOnly = true;
+            // 
+            // Password
+            // 
+            this.Password.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Password.HeaderText = "Password";
+            this.Password.Name = "Password";
+            this.Password.ReadOnly = true;
+            // 
+            // Note
+            // 
+            this.Note.HeaderText = "Note";
+            this.Note.Name = "Note";
+            this.Note.ReadOnly = true;
+            // 
+            // DateCreated
+            // 
+            this.DateCreated.HeaderText = "Date created";
+            this.DateCreated.Name = "DateCreated";
+            this.DateCreated.ReadOnly = true;
+            // 
+            // ExpiryDate
+            // 
+            this.ExpiryDate.HeaderText = "Expiry date";
+            this.ExpiryDate.Name = "ExpiryDate";
+            // 
+            // Options
+            // 
+            this.Options.HeaderText = "Options";
+            this.Options.Name = "Options";
+            this.Options.Width = 50;
             // 
             // Form1
             // 
@@ -240,6 +267,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Email;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
         private System.Windows.Forms.DataGridViewTextBoxColumn Note;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DateCreated;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ExpiryDate;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Options;
     }
 }
 

@@ -37,22 +37,14 @@
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.textBoxNote = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
-            this.trackBar3 = new System.Windows.Forms.TrackBar();
-            this.label7 = new System.Windows.Forms.Label();
-            this.trackBar4 = new System.Windows.Forms.TrackBar();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.ShowPasswordButton = new System.Windows.Forms.Label();
             this.CopyPasswordToClipboard = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar4)).BeginInit();
+            this.labelExpiryDate = new System.Windows.Forms.Label();
+            this.dateTimePickerExpiryDate = new System.Windows.Forms.DateTimePicker();
+            this.CheckBoxExpire = new System.Windows.Forms.CheckBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.textBoxPincode = new System.Windows.Forms.TextBox();
+            this.buttonConfigurePassword = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxWebService
@@ -61,7 +53,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxWebService.Location = new System.Drawing.Point(130, 8);
             this.textBoxWebService.Name = "textBoxWebService";
-            this.textBoxWebService.Size = new System.Drawing.Size(297, 20);
+            this.textBoxWebService.Size = new System.Drawing.Size(336, 20);
             this.textBoxWebService.TabIndex = 0;
             this.textBoxWebService.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
@@ -96,7 +88,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 296);
+            this.label4.Location = new System.Drawing.Point(9, 221);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(30, 13);
             this.label4.TabIndex = 4;
@@ -108,7 +100,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxEmail.Location = new System.Drawing.Point(130, 38);
             this.textBoxEmail.Name = "textBoxEmail";
-            this.textBoxEmail.Size = new System.Drawing.Size(297, 20);
+            this.textBoxEmail.Size = new System.Drawing.Size(336, 20);
             this.textBoxEmail.TabIndex = 5;
             // 
             // textBoxPassword
@@ -117,7 +109,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxPassword.Location = new System.Drawing.Point(130, 68);
             this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(259, 20);
+            this.textBoxPassword.Size = new System.Drawing.Size(301, 20);
             this.textBoxPassword.TabIndex = 6;
             this.textBoxPassword.UseSystemPasswordChar = true;
             this.textBoxPassword.TextChanged += new System.EventHandler(this.textBoxPassword_TextChanged);
@@ -127,16 +119,16 @@
             this.textBoxNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxNote.Location = new System.Drawing.Point(130, 296);
+            this.textBoxNote.Location = new System.Drawing.Point(127, 221);
             this.textBoxNote.Multiline = true;
             this.textBoxNote.Name = "textBoxNote";
-            this.textBoxNote.Size = new System.Drawing.Size(297, 176);
+            this.textBoxNote.Size = new System.Drawing.Size(339, 173);
             this.textBoxNote.TabIndex = 7;
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(352, 522);
+            this.button1.Location = new System.Drawing.Point(391, 411);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 8;
@@ -144,125 +136,11 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.trackBar4);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.trackBar3);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.trackBar1);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Location = new System.Drawing.Point(12, 123);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(415, 161);
-            this.groupBox1.TabIndex = 9;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Password settings";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(7, 20);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(85, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Password length";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
-            // 
-            // trackBar1
-            // 
-            this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackBar1.LargeChange = 10;
-            this.trackBar1.Location = new System.Drawing.Point(118, 20);
-            this.trackBar1.Maximum = 50;
-            this.trackBar1.Minimum = 6;
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(240, 45);
-            this.trackBar1.TabIndex = 1;
-            this.trackBar1.Value = 8;
-            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
-            // 
-            // trackBar3
-            // 
-            this.trackBar3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackBar3.LargeChange = 10;
-            this.trackBar3.Location = new System.Drawing.Point(118, 71);
-            this.trackBar3.Maximum = 50;
-            this.trackBar3.Name = "trackBar3";
-            this.trackBar3.Size = new System.Drawing.Size(240, 45);
-            this.trackBar3.TabIndex = 5;
-            this.trackBar3.Scroll += new System.EventHandler(this.trackBar3_Scroll);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(7, 71);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(99, 13);
-            this.label7.TabIndex = 4;
-            this.label7.Text = "Number of numbers";
-            // 
-            // trackBar4
-            // 
-            this.trackBar4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.trackBar4.LargeChange = 10;
-            this.trackBar4.Location = new System.Drawing.Point(118, 122);
-            this.trackBar4.Maximum = 50;
-            this.trackBar4.Name = "trackBar4";
-            this.trackBar4.Size = new System.Drawing.Size(240, 45);
-            this.trackBar4.TabIndex = 7;
-            this.trackBar4.Scroll += new System.EventHandler(this.trackBar4_Scroll);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(7, 122);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(96, 13);
-            this.label8.TabIndex = 6;
-            this.label8.Text = "Number of symbols";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(364, 20);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(13, 13);
-            this.label6.TabIndex = 8;
-            this.label6.Text = "0";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(364, 71);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(13, 13);
-            this.label9.TabIndex = 9;
-            this.label9.Text = "0";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(364, 122);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(13, 13);
-            this.label10.TabIndex = 10;
-            this.label10.Text = "0";
-            // 
             // ShowPasswordButton
             // 
+            this.ShowPasswordButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ShowPasswordButton.AutoSize = true;
-            this.ShowPasswordButton.Location = new System.Drawing.Point(395, 71);
+            this.ShowPasswordButton.Location = new System.Drawing.Point(433, 64);
             this.ShowPasswordButton.Name = "ShowPasswordButton";
             this.ShowPasswordButton.Size = new System.Drawing.Size(34, 13);
             this.ShowPasswordButton.TabIndex = 10;
@@ -271,22 +149,85 @@
             // 
             // CopyPasswordToClipboard
             // 
+            this.CopyPasswordToClipboard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CopyPasswordToClipboard.AutoSize = true;
-            this.CopyPasswordToClipboard.Location = new System.Drawing.Point(395, 94);
+            this.CopyPasswordToClipboard.Location = new System.Drawing.Point(434, 81);
             this.CopyPasswordToClipboard.Name = "CopyPasswordToClipboard";
             this.CopyPasswordToClipboard.Size = new System.Drawing.Size(31, 13);
             this.CopyPasswordToClipboard.TabIndex = 11;
             this.CopyPasswordToClipboard.Text = "Copy";
             this.CopyPasswordToClipboard.Click += new System.EventHandler(this.CopyPasswordToClipboard_Click);
             // 
+            // labelExpiryDate
+            // 
+            this.labelExpiryDate.AutoSize = true;
+            this.labelExpiryDate.Location = new System.Drawing.Point(9, 184);
+            this.labelExpiryDate.Name = "labelExpiryDate";
+            this.labelExpiryDate.Size = new System.Drawing.Size(59, 13);
+            this.labelExpiryDate.TabIndex = 12;
+            this.labelExpiryDate.Text = "Expiry date";
+            // 
+            // dateTimePickerExpiryDate
+            // 
+            this.dateTimePickerExpiryDate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateTimePickerExpiryDate.Enabled = false;
+            this.dateTimePickerExpiryDate.Location = new System.Drawing.Point(154, 184);
+            this.dateTimePickerExpiryDate.Name = "dateTimePickerExpiryDate";
+            this.dateTimePickerExpiryDate.Size = new System.Drawing.Size(312, 20);
+            this.dateTimePickerExpiryDate.TabIndex = 13;
+            // 
+            // CheckBoxExpire
+            // 
+            this.CheckBoxExpire.AutoSize = true;
+            this.CheckBoxExpire.Location = new System.Drawing.Point(124, 187);
+            this.CheckBoxExpire.Name = "CheckBoxExpire";
+            this.CheckBoxExpire.Size = new System.Drawing.Size(15, 14);
+            this.CheckBoxExpire.TabIndex = 14;
+            this.CheckBoxExpire.UseVisualStyleBackColor = true;
+            this.CheckBoxExpire.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(12, 151);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(46, 13);
+            this.label11.TabIndex = 15;
+            this.label11.Text = "Pincode";
+            // 
+            // textBoxPincode
+            // 
+            this.textBoxPincode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxPincode.Location = new System.Drawing.Point(130, 151);
+            this.textBoxPincode.Name = "textBoxPincode";
+            this.textBoxPincode.Size = new System.Drawing.Size(336, 20);
+            this.textBoxPincode.TabIndex = 16;
+            // 
+            // buttonConfigurePassword
+            // 
+            this.buttonConfigurePassword.Location = new System.Drawing.Point(130, 108);
+            this.buttonConfigurePassword.Name = "buttonConfigurePassword";
+            this.buttonConfigurePassword.Size = new System.Drawing.Size(336, 23);
+            this.buttonConfigurePassword.TabIndex = 17;
+            this.buttonConfigurePassword.Text = "Configure password";
+            this.buttonConfigurePassword.UseVisualStyleBackColor = true;
+            this.buttonConfigurePassword.Click += new System.EventHandler(this.buttonConfigurePassword_Click);
+            // 
             // Add_Password_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(441, 557);
+            this.ClientSize = new System.Drawing.Size(480, 446);
+            this.Controls.Add(this.buttonConfigurePassword);
+            this.Controls.Add(this.textBoxPincode);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.CheckBoxExpire);
+            this.Controls.Add(this.dateTimePickerExpiryDate);
+            this.Controls.Add(this.labelExpiryDate);
             this.Controls.Add(this.CopyPasswordToClipboard);
             this.Controls.Add(this.ShowPasswordButton);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBoxNote);
             this.Controls.Add(this.textBoxPassword);
@@ -298,11 +239,6 @@
             this.Controls.Add(this.textBoxWebService);
             this.Name = "Add_Password_Form";
             this.Text = "Add_Password";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBar4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -319,17 +255,13 @@
         private System.Windows.Forms.TextBox textBoxPassword;
         private System.Windows.Forms.TextBox textBoxNote;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TrackBar trackBar4;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TrackBar trackBar3;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TrackBar trackBar1;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label ShowPasswordButton;
         private System.Windows.Forms.Label CopyPasswordToClipboard;
+        private System.Windows.Forms.Label labelExpiryDate;
+        private System.Windows.Forms.DateTimePicker dateTimePickerExpiryDate;
+        private System.Windows.Forms.CheckBox CheckBoxExpire;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox textBoxPincode;
+        private System.Windows.Forms.Button buttonConfigurePassword;
     }
 }
