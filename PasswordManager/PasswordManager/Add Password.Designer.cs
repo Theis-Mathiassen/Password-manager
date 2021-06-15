@@ -207,6 +207,8 @@
             // 
             // buttonConfigurePassword
             // 
+            this.buttonConfigurePassword.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonConfigurePassword.Location = new System.Drawing.Point(130, 108);
             this.buttonConfigurePassword.Name = "buttonConfigurePassword";
             this.buttonConfigurePassword.Size = new System.Drawing.Size(336, 23);

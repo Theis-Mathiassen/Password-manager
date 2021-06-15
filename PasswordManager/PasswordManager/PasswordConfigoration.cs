@@ -12,7 +12,6 @@ namespace PasswordManager
 {
     public partial class PasswordConfigoration : Form
     {
-        private 
         public string Password
         {
             get { return textBoxPassword.Text; }
@@ -60,7 +59,6 @@ namespace PasswordManager
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             DialogResult = DialogResult.OK;
         }
     }

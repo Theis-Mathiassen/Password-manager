@@ -46,10 +46,10 @@
             this.Service = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Pincode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ExpiryDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Options = new System.Windows.Forms.DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -63,16 +63,17 @@
             this.Service,
             this.Email,
             this.Password,
+            this.Pincode,
             this.Note,
             this.DateCreated,
-            this.ExpiryDate,
-            this.Options});
+            this.ExpiryDate});
             this.dataGridView1.Location = new System.Drawing.Point(12, 27);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 50;
             this.dataGridView1.Size = new System.Drawing.Size(776, 411);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             // 
             // menuStrip1
             // 
@@ -157,6 +158,7 @@
             this.removePasswordToolStripMenuItem.Name = "removePasswordToolStripMenuItem";
             this.removePasswordToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.removePasswordToolStripMenuItem.Text = "Remove password";
+            this.removePasswordToolStripMenuItem.Click += new System.EventHandler(this.removePasswordToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -175,7 +177,7 @@
             // readMeToolStripMenuItem
             // 
             this.readMeToolStripMenuItem.Name = "readMeToolStripMenuItem";
-            this.readMeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.readMeToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.readMeToolStripMenuItem.Text = "Read me";
             // 
             // ID
@@ -205,6 +207,12 @@
             this.Password.Name = "Password";
             this.Password.ReadOnly = true;
             // 
+            // Pincode
+            // 
+            this.Pincode.HeaderText = "Pincode";
+            this.Pincode.Name = "Pincode";
+            this.Pincode.ReadOnly = true;
+            // 
             // Note
             // 
             this.Note.HeaderText = "Note";
@@ -221,12 +229,7 @@
             // 
             this.ExpiryDate.HeaderText = "Expiry date";
             this.ExpiryDate.Name = "ExpiryDate";
-            // 
-            // Options
-            // 
-            this.Options.HeaderText = "Options";
-            this.Options.Name = "Options";
-            this.Options.Width = 50;
+            this.ExpiryDate.ReadOnly = true;
             // 
             // Form1
             // 
@@ -266,10 +269,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Service;
         private System.Windows.Forms.DataGridViewTextBoxColumn Email;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Pincode;
         private System.Windows.Forms.DataGridViewTextBoxColumn Note;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateCreated;
         private System.Windows.Forms.DataGridViewTextBoxColumn ExpiryDate;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Options;
     }
 }
 

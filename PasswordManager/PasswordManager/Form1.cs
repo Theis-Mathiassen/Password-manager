@@ -26,6 +26,38 @@ namespace PasswordManager
             
         }
 
+        private Credential getSelectedCredential ()
+        {
+            Credential result = null;
+            Int32 selectedCellCount = dataGridView1.GetCellCount(DataGridViewElementStates.Selected);
+            if (selectedCellCount > 0)
+            {
+                DataGridViewRow selectedRow = dataGridView1.Rows[dataGridView1.SelectedCells[selectedCellCount - 1].RowIndex];
+                long CredentialID = Convert.ToInt64(selectedRow.Cells["ID"].Value);
+                foreach (Credential credential in Program.passwordBook.passwordData)
+                {
+                    if (credential.Id == CredentialID)
+                    {
+                        result = credential;
+                    }
+                }
+            }
+            else
+            {
+                result = null;
+            }
+            return result;
+        }
+
+
+        private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if ((e.ColumnIndex == 3 || e.ColumnIndex == 4) && e.Value != null)
+            {
+                dataGridView1.Rows[e.RowIndex].Tag = e.Value;
+                e.Value = new String('\u25CF', e.Value.ToString().Length);
+            }
+        }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             
@@ -33,7 +65,27 @@ namespace PasswordManager
         }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Program.passwordBook.SavePasswordsToFile(Program.passwordListPath);
+            if (Program.passwordBook.modified)
+            {
+                using (Form form = new ConfirmAction("Overwrite current save file."))
+                {
+                    DialogResult ConfirmDialogResult = form.ShowDialog();
+                    if (ConfirmDialogResult == DialogResult.OK)
+                    {
+                        Program.passwordBook.SavePasswordsToFile(Program.passwordListPath);
+                    }
+                    else if (ConfirmDialogResult == DialogResult.Cancel)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            
+            
         }
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -97,27 +149,17 @@ namespace PasswordManager
 
         private void editPasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Int32 selectedCellCount = dataGridView1.GetCellCount(DataGridViewElementStates.Selected);
-            if (selectedCellCount > 0)
+            Credential selectedCredential = getSelectedCredential();
+            if (selectedCredential != null)
             {
-                DataGridViewRow selectedRow = dataGridView1.Rows[dataGridView1.SelectedCells[selectedCellCount - 1].RowIndex];
-                long CredentialID = Convert.ToInt64(selectedRow.Cells["ID"].Value);
-                Credential selectedCredential = null;
-                foreach (Credential credential in Program.passwordBook.passwordData)
-                {
-                    if (credential.Id == CredentialID)
-                    {
-                        selectedCredential = credential;
-                    }
-                }
-
-                if (selectedCredential != null)
-                {
-                    passwordShowForm = new PasswordShow();
-                    passwordShowForm.Show();
-                }
+                passwordShowForm = new PasswordShow(selectedCredential);
+                passwordShowForm.Show();
             }
-            
+        }
+
+        private void removePasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

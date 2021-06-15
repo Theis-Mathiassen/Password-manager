@@ -23,7 +23,7 @@ namespace PasswordManager
                 textBoxPassword.Text = value;
             }
         }
-        public String _password;
+        private String _password;
 
         public Add_Password_Form()
         {
