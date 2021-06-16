@@ -41,7 +41,7 @@ namespace PasswordManager
             {
                 dateTimePicker1.Value = credential.DateCreated;
             }
-            if (credential.ExpiryDate != null)
+            if (credential.Expires)
             {
                 dateTimePickerExpiryDate.Value = credential.ExpiryDate;
             }

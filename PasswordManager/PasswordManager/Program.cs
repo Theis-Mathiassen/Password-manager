@@ -199,7 +199,7 @@ namespace PasswordManager
             this.Note = note;
             DateCreated = DateTime.Now;
             Expires = false;
-            ExpiryDate = DateTime.MaxValue;
+            ExpiryDate = DateTime.Now;
         }
         public Credential(string serviceName, string email, string password, string pincode, string note, int id, DateTime ExpiryDate)
         {

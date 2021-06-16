@@ -60,6 +60,7 @@
             this.textBoxPincode.Name = "textBoxPincode";
             this.textBoxPincode.Size = new System.Drawing.Size(576, 20);
             this.textBoxPincode.TabIndex = 32;
+            this.textBoxPincode.UseSystemPasswordChar = true;
             this.textBoxPincode.TextChanged += new System.EventHandler(this.textBoxPincode_TextChanged);
             // 
             // label11
