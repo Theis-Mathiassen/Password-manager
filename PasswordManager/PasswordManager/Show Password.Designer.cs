@@ -48,6 +48,8 @@
             this.label12 = new System.Windows.Forms.Label();
             this.CheckBoxExpire = new System.Windows.Forms.CheckBox();
             this.buttonConfigurePassword = new System.Windows.Forms.Button();
+            this.CopyPincodeToClipboard = new System.Windows.Forms.Label();
+            this.ShowPincodeButton = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBoxPincode
@@ -56,8 +58,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxPincode.Location = new System.Drawing.Point(129, 147);
             this.textBoxPincode.Name = "textBoxPincode";
-            this.textBoxPincode.Size = new System.Drawing.Size(612, 20);
+            this.textBoxPincode.Size = new System.Drawing.Size(576, 20);
             this.textBoxPincode.TabIndex = 32;
+            this.textBoxPincode.TextChanged += new System.EventHandler(this.textBoxPincode_TextChanged);
             // 
             // label11
             // 
@@ -96,6 +99,7 @@
             this.CopyPasswordToClipboard.Size = new System.Drawing.Size(31, 13);
             this.CopyPasswordToClipboard.TabIndex = 27;
             this.CopyPasswordToClipboard.Text = "Copy";
+            this.CopyPasswordToClipboard.Click += new System.EventHandler(this.CopyPasswordToClipboard_Click);
             // 
             // ShowPasswordButton
             // 
@@ -106,6 +110,7 @@
             this.ShowPasswordButton.Size = new System.Drawing.Size(34, 13);
             this.ShowPasswordButton.TabIndex = 26;
             this.ShowPasswordButton.Text = "Show";
+            this.ShowPasswordButton.Click += new System.EventHandler(this.ShowPasswordButton_Click);
             // 
             // textBoxNote
             // 
@@ -245,11 +250,35 @@
             this.buttonConfigurePassword.UseVisualStyleBackColor = true;
             this.buttonConfigurePassword.Click += new System.EventHandler(this.buttonConfigurePassword_Click);
             // 
+            // CopyPincodeToClipboard
+            // 
+            this.CopyPincodeToClipboard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CopyPincodeToClipboard.AutoSize = true;
+            this.CopyPincodeToClipboard.Location = new System.Drawing.Point(711, 158);
+            this.CopyPincodeToClipboard.Name = "CopyPincodeToClipboard";
+            this.CopyPincodeToClipboard.Size = new System.Drawing.Size(31, 13);
+            this.CopyPincodeToClipboard.TabIndex = 39;
+            this.CopyPincodeToClipboard.Text = "Copy";
+            this.CopyPincodeToClipboard.Click += new System.EventHandler(this.CopyPincodeToClipboard_Click);
+            // 
+            // ShowPincodeButton
+            // 
+            this.ShowPincodeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ShowPincodeButton.AutoSize = true;
+            this.ShowPincodeButton.Location = new System.Drawing.Point(710, 141);
+            this.ShowPincodeButton.Name = "ShowPincodeButton";
+            this.ShowPincodeButton.Size = new System.Drawing.Size(34, 13);
+            this.ShowPincodeButton.TabIndex = 38;
+            this.ShowPincodeButton.Text = "Show";
+            this.ShowPincodeButton.Click += new System.EventHandler(this.label6_Click);
+            // 
             // PasswordShow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(753, 593);
+            this.Controls.Add(this.CopyPincodeToClipboard);
+            this.Controls.Add(this.ShowPincodeButton);
             this.Controls.Add(this.buttonConfigurePassword);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.label12);
@@ -299,5 +328,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.CheckBox CheckBoxExpire;
         private System.Windows.Forms.Button buttonConfigurePassword;
+        private System.Windows.Forms.Label CopyPincodeToClipboard;
+        private System.Windows.Forms.Label ShowPincodeButton;
     }
 }

@@ -215,20 +215,21 @@ namespace PasswordManager
         }
         internal string[] ToStringArray ()
         {
-            string[] result = new string[7];
+            string[] result = new string[8];
             result[0] = Id.ToString();
             result[1] = ServiceName;
             result[2] = Email;
             result[3] = Password;
-            result[4] = Note;
-            result[5] = DateCreated.ToLongDateString();
+            result[4] = Pincode;
+            result[5] = Note;
+            result[6] = DateCreated.ToLongDateString();
             if (Expires)
             {
-                result[6] = ExpiryDate.ToLongDateString();
+                result[7] = ExpiryDate.ToLongDateString();
             }
             else
             {
-                result[6] = "";
+                result[7] = "";
             }
 
             return result;
