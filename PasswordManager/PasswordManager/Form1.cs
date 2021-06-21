@@ -22,8 +22,27 @@ namespace PasswordManager
         public Form1()
         {
             InitializeComponent();
-            Program.passwordListPath = @"C:\test\data.JSON";
-            
+            LoadPasswords();
+        }
+
+        private void LoadPasswords ()
+        {
+            dataGridView1.Rows.Clear();
+            using (LoadPasswordFile loadPassword = new LoadPasswordFile())
+            {
+                if (loadPassword.ShowDialog() == DialogResult.OK)
+                {
+                    Program.passwordBook = new PasswordBook(loadPassword.getFilePath(), loadPassword.getPassWordHash());
+                    Program.passwordBook.LoadPasswordsFromFile();
+                }
+                else
+                {
+                    Program.passwordBook = new PasswordBook("", null);
+                }
+            }
+
+            insertDataToGridView(Program.passwordBook.GetCredentials(), dataGridView1);
+            updatePasswordsView();
         }
 
         private Credential getSelectedCredential ()
@@ -34,7 +53,8 @@ namespace PasswordManager
             {
                 DataGridViewRow selectedRow = dataGridView1.Rows[dataGridView1.SelectedCells[selectedCellCount - 1].RowIndex];
                 long CredentialID = Convert.ToInt64(selectedRow.Cells["ID"].Value);
-                foreach (Credential credential in Program.passwordBook.passwordData)
+                List<Credential> credentials = Program.passwordBook.GetCredentials();
+                foreach (Credential credential in credentials)
                 {
                     if (credential.Id == CredentialID)
                     {
@@ -65,14 +85,14 @@ namespace PasswordManager
         }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Program.passwordBook.modified)
+            if (Program.passwordBook.IsModified())
             {
                 using (Form form = new ConfirmAction("Overwrite current save file."))
                 {
                     DialogResult ConfirmDialogResult = form.ShowDialog();
                     if (ConfirmDialogResult == DialogResult.OK)
                     {
-                        Program.passwordBook.SavePasswordsToFile(Program.passwordListPath);
+                        Program.passwordBook.SavePasswordsToFile();
                     }
                     else if (ConfirmDialogResult == DialogResult.Cancel)
                     {
@@ -89,11 +109,7 @@ namespace PasswordManager
         }
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dataGridView1.Rows.Clear();
-            Program.passwordBook.ClearPasswords();
-            Program.passwordBook.LoadPasswordsFromFile(Program.passwordListPath);
-            insertDataToGridView(Program.passwordBook.passwordData, dataGridView1);
-            updatePasswordsView();
+            LoadPasswords();
         }
 
         
@@ -101,11 +117,12 @@ namespace PasswordManager
         public void updatePasswordsView ()
         {
             dataGridView1.Rows.Clear();
-            if (Program.passwordBook.passwordData.Count > 0)
+            List<Credential> passwordData = Program.passwordBook.GetCredentials();
+            if (passwordData.Count > 0)
             {
-                for (int i = 0; i < Program.passwordBook.passwordData.Count; i++)
+                for (int i = 0; i < passwordData.Count; i++)
                 {
-                    dataGridView1.Rows.Add(Program.passwordBook.passwordData[i].ToStringArray());
+                    dataGridView1.Rows.Add(passwordData[i].ToStringArray());
                 }
             }
         }

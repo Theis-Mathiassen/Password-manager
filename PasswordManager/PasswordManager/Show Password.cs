@@ -17,34 +17,22 @@ namespace PasswordManager
         {
             InitializeComponent();
             this.credential = credential;
-            if (credential.Email != null)
-            {
+            try {
                 textBoxEmail.Text = credential.Email;
-            }
-            if (credential.Note != null)
-            {
                 textBoxNote.Text = credential.Note;
-            }
-            if (credential.Password != null)
-            {
                 textBoxPassword.Text = credential.Password;
-            }
-            if (credential.Pincode != null)
-            {
                 textBoxPincode.Text = credential.Pincode;
-            }
-            if (credential.ServiceName != null)
-            {
                 textBoxWebService.Text = credential.ServiceName;
-            }
-            if (credential.DateCreated != null)
-            {
                 dateTimePicker1.Value = credential.DateCreated;
-            }
-            if (credential.Expires)
-            {
+                CheckBoxExpire.Checked = credential.Expires;
                 dateTimePickerExpiryDate.Value = credential.ExpiryDate;
             }
+            catch (Exception e)
+            {
+                //Null reference
+                Console.WriteLine(e);
+            }
+            
 
             
         }
@@ -79,7 +67,7 @@ namespace PasswordManager
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.Cancel;
         }
 
         private void ShowPasswordButton_Click(object sender, EventArgs e)
@@ -125,6 +113,11 @@ namespace PasswordManager
         {
             Clipboard.SetData(DataFormats.Text, (Object)textBoxPincode.Text);
             CopyPasswordToClipboard.Text = "Copied";
+        }
+
+        private void buttonSaveChanges_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

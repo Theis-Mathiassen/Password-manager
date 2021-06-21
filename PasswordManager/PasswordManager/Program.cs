@@ -15,9 +15,9 @@ namespace PasswordManager
 {
     static class Program
     {
-        internal const string MasterPassword = "Master";
+        //internal const string MasterPassword = "Master";
         static internal PasswordBook passwordBook;
-        static internal string passwordListPath;
+        //static internal string passwordListPath;
         static internal Form1 mainForm;
         /// <summary>
         /// The main entry point for the application.
@@ -25,7 +25,6 @@ namespace PasswordManager
         [STAThread]
         static void Main()
         {
-            passwordBook = new PasswordBook();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             mainForm = new Form1();
@@ -77,6 +76,7 @@ namespace PasswordManager
             catch (IndexOutOfRangeException ex)
             {
                 Console.WriteLine("Error to many symbols");
+                Console.WriteLine(ex.ToString());
             }
             
             return result;
@@ -90,13 +90,28 @@ namespace PasswordManager
     /// </summary>
     public class PasswordBook
     {
-        public bool modified;
-        internal List<Credential> passwordData;
-        public PasswordBook ()
+        //Indicates wether or not the Password book has been modified.
+        private bool modified;
+        //The list of the passwords and attached information.
+        private List<Credential> passwordData;
+        //The hashed password key used to decrypt passwords.
+        private byte[][] keys;
+        //The path of the file storing the passwords.
+        private string path;
+        public PasswordBook (string path, byte[][] keys)
         {
             passwordData = new List<Credential>();
+            this.path = path;
+            this.keys = keys;
         }
-
+        public bool IsModified ()
+        {
+            return modified;
+        }
+        public List<Credential> GetCredentials ()
+        {
+            return passwordData;
+        }
         public int GetNewId ()
         {
             int tempID = passwordData.Count;
@@ -155,19 +170,30 @@ namespace PasswordManager
             passwordData = JsonConvert.DeserializeObject<List<Credential>>(JSONString);
         }
 
-        internal void SavePasswordsToFile(string path)
+        internal void SavePasswordsToFile()
         {
             string JSONText = SavePasswordsToJSON();
-            string encryptedPasswords = SecurityController.Encrypt(Program.MasterPassword, JSONText);
-            File.WriteAllText(@"C:\test\unencrypted.JSON", JSONText);
+            string encryptedPasswords = SecurityController.Encrypt(keys, JSONText);
+            File.WriteAllText(path, JSONText);
             File.WriteAllText(path, encryptedPasswords);
         }
-        internal void LoadPasswordsFromFile(string path)
+        internal bool LoadPasswordsFromFile()
         {
+            bool result = true;
+            ClearPasswords();
             modified = false;
             string encryptedString = File.ReadAllText(path);
-            string JSONString = SecurityController.Decrypt(Program.MasterPassword, encryptedString);
-            LoadPasswordsFromJSON(JSONString);
+            string JSONString = SecurityController.Decrypt(keys, encryptedString);
+            if (JSONString != null)
+            {
+                LoadPasswordsFromJSON(JSONString);
+            }
+            else
+            {
+                //Incorrect try again.
+                result = false;
+            }
+            return result;
         }
     }
     /// <summary>

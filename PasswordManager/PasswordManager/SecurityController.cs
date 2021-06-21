@@ -10,10 +10,9 @@ namespace PasswordManager
 {
     static class SecurityController
     {
-        public static string Encrypt(string key, string data)
+        public static string Encrypt(byte[][] keys, string data)
         {
             string encData = null;
-            byte[][] keys = GetHashKeys(key);
 
             try
             {
@@ -25,22 +24,24 @@ namespace PasswordManager
             return encData;
         }
 
-        public static string Decrypt(string key, string data)
+        public static string Decrypt(byte[][] keys, string data)
         {
             string decData = null;
-            byte[][] keys = GetHashKeys(key);
 
             try
             {
                 decData = DecryptStringFromBytes_Aes(data, keys[0], keys[1]);
             }
-            catch (CryptographicException) { }
+            catch (CryptographicException)
+            {
+                Console.WriteLine("Incorrect password");
+            }
             catch (ArgumentNullException) { }
 
             return decData;
         }
 
-        private static byte[][] GetHashKeys(string key)
+        public static byte[][] GetHashKeys(string key)
         {
             byte[][] result = new byte[2][];
             Encoding enc = Encoding.UTF8;
