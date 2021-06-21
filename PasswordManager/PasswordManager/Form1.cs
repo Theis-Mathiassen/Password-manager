@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,8 +22,9 @@ namespace PasswordManager
 
         public Form1()
         {
+            
             InitializeComponent();
-            LoadPasswords();
+            //LoadPasswords();
         }
 
         private void LoadPasswords ()
@@ -32,12 +34,12 @@ namespace PasswordManager
             {
                 if (loadPassword.ShowDialog() == DialogResult.OK)
                 {
-                    Program.passwordBook = new PasswordBook(loadPassword.getFilePath(), loadPassword.getPassWordHash());
+                    Program.passwordBook = new PasswordBook(loadPassword.getFilePath(), loadPassword.getPassWordHash(), Path.GetFileNameWithoutExtension(loadPassword.getFilePath()));
                     Program.passwordBook.LoadPasswordsFromFile();
                 }
                 else
                 {
-                    Program.passwordBook = new PasswordBook("", null);
+                    Program.passwordBook = new PasswordBook("", null, "Empty");
                 }
             }
 
@@ -85,25 +87,41 @@ namespace PasswordManager
         }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (Program.passwordBook.IsModified())
+            if (Program.passwordBook.IsPathEmpty())
             {
-                using (Form form = new ConfirmAction("Overwrite current save file."))
+                using (SavePasswordFile savePassword = new SavePasswordFile())
                 {
-                    DialogResult ConfirmDialogResult = form.ShowDialog();
-                    if (ConfirmDialogResult == DialogResult.OK)
+                    if (savePassword.ShowDialog() == DialogResult.OK)
                     {
+                        Program.passwordBook.SetPath(savePassword.FilePath);
+                        Program.passwordBook.SetMasterPassword(savePassword.PasswordHash);
                         Program.passwordBook.SavePasswordsToFile();
-                    }
-                    else if (ConfirmDialogResult == DialogResult.Cancel)
-                    {
-
-                    }
-                    else
-                    {
-
                     }
                 }
             }
+            else
+            {
+                if (Program.passwordBook.IsModified())
+                {
+                    using (Form form = new ConfirmAction("Overwrite current save file."))
+                    {
+                        DialogResult ConfirmDialogResult = form.ShowDialog();
+                        if (ConfirmDialogResult == DialogResult.OK)
+                        {
+                            Program.passwordBook.SavePasswordsToFile();
+                        }
+                        else if (ConfirmDialogResult == DialogResult.Cancel)
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                }
+            }
+            
             
             
         }

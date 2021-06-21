@@ -25,10 +25,14 @@ namespace PasswordManager
         [STAThread]
         static void Main()
         {
+            passwordBook = new PasswordBook(null, null, "Empty");
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             mainForm = new Form1();
+            mainForm.Text = passwordBook.GetName();
             Application.Run(mainForm);
+            
         }
 
         internal static string generatePassword(int length, int numberCount, int symbolCount)
@@ -90,6 +94,8 @@ namespace PasswordManager
     /// </summary>
     public class PasswordBook
     {
+        //Name of the passwordbook
+        private string BookName;
         //Indicates wether or not the Password book has been modified.
         private bool modified;
         //The list of the passwords and attached information.
@@ -98,11 +104,36 @@ namespace PasswordManager
         private byte[][] keys;
         //The path of the file storing the passwords.
         private string path;
-        public PasswordBook (string path, byte[][] keys)
+
+        public bool IsPathEmpty ()
+        {
+            if (path == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public void SetPath (string path)
+        {
+            this.path = path;
+        }
+        public void SetMasterPassword (byte[][] keys)
+        {
+            this.keys = keys;
+        }
+        public PasswordBook (string path, byte[][] keys, string BookName)
         {
             passwordData = new List<Credential>();
             this.path = path;
             this.keys = keys;
+            this.BookName = BookName;
+        }
+        public string GetName ()
+        {
+            return BookName;
         }
         public bool IsModified ()
         {
@@ -172,13 +203,18 @@ namespace PasswordManager
 
         internal void SavePasswordsToFile()
         {
+            BookName = Path.GetFileName(path);
+            Program.mainForm.Text = BookName;
             string JSONText = SavePasswordsToJSON();
             string encryptedPasswords = SecurityController.Encrypt(keys, JSONText);
             File.WriteAllText(path, JSONText);
             File.WriteAllText(path, encryptedPasswords);
+
         }
         internal bool LoadPasswordsFromFile()
         {
+            BookName = Path.GetFileName(path);
+            Program.mainForm.Text = BookName;
             bool result = true;
             ClearPasswords();
             modified = false;
