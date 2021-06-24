@@ -144,16 +144,20 @@ namespace PasswordManager
                 }
                 else
                 {
-                    using (SavePasswordFile savePassword = new SavePasswordFile())
+                    using (SaveFileDialog SaveFileDialog = new SaveFileDialog())
                     {
-                        if (savePassword.ShowDialog() == DialogResult.OK)
+                        SaveFileDialog.InitialDirectory = "c:\\";
+                        SaveFileDialog.Filter = "JSON files (*.JSON)|*.JSON";
+                        SaveFileDialog.FilterIndex = 2;
+                        SaveFileDialog.RestoreDirectory = true;
+
+                        if (SaveFileDialog.ShowDialog() == DialogResult.OK)
                         {
-                            Program.passwordBook.SetPath(savePassword.FilePath);
+                            Program.passwordBook.SetPath(SaveFileDialog.FileName);
                             Program.passwordBook.SavePasswordsToFile();
                         }
                     }
                 }
-
             }
             else
             {
