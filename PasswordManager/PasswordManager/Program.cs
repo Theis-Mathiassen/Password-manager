@@ -253,6 +253,19 @@ namespace PasswordManager
         {
 
         }
+        public Credential(string serviceName, string email, string password, string pincode, string note, string URL, bool expires, DateTime ExpiryDate)
+        {
+            this.Id = 0;
+            this.ServiceName = serviceName;
+            this.Email = email;
+            this.Password = password;
+            this.Pincode = pincode;
+            this.URL = URL;
+            this.Note = note;
+            DateCreated = DateTime.Now;
+            Expires = expires;
+            this.ExpiryDate = ExpiryDate;
+        }
         public Credential(string serviceName, string email, string password, string pincode, string note, int id, string URL, bool expires, DateTime ExpiryDate)
         {
             this.Id = id;
@@ -266,26 +279,56 @@ namespace PasswordManager
             Expires = expires;
             this.ExpiryDate = ExpiryDate;
         }
-        internal string[] ToStringArray ()
-        {
-            string[] result = new string[9];
-            result[0] = Id.ToString();
-            result[1] = ServiceName;
-            result[2] = Email;
-            result[3] = Password;
-            result[4] = Pincode;
-            result[5] = URL;
-            result[6] = Note;
-            result[7] = DateCreated.ToLongDateString();
-            if (Expires)
-            {
-                result[8] = ExpiryDate.ToLongDateString();
-            }
-            else
-            {
-                result[8] = "";
-            }
 
+        internal string[] ToStringArray (string[] columnHeader)
+        {
+            string[] result = new string[columnHeader.Count()];
+            for (int i = 0; i < result.Length; i++)
+            {
+                switch (columnHeader[i])
+                {
+                    case "ID":
+                        result[i] = Id.ToString();
+                        break;
+                    case "Service":
+                        result[i] = ServiceName;
+                        break;
+                    case "Email":
+                        result[i] = Email;
+                        break;
+                    case "Password":
+                        result[i] = Password;
+                        break;
+                    case "CopyPassword":
+                        result[i] = "";
+                        break;
+                    case "Pincode":
+                        result[i] = Pincode;
+                        break;
+                    case "URL":
+                        result[i] = URL;
+                        break;
+                    case "Note":
+                        result[i] = Note;
+                        break;
+                    case "DateCreated":
+                        result[i] = DateCreated.ToLongDateString();
+                        break;
+                    case "ExpiryDate":
+                        if (Expires)
+                        {
+                            result[i] = ExpiryDate.ToLongDateString();
+                        }
+                        else
+                        {
+                            result[i] = "";
+                        }
+                        break;
+                    default:
+                        result[i] = "Error";
+                        break;
+                }
+            }
             return result;
         }
     }

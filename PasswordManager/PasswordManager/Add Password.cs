@@ -12,6 +12,7 @@ namespace PasswordManager
 {
     public partial class Add_Password_Form : Form
     {
+        public Credential credential = null;
         public String password {
             get
             {
@@ -28,72 +29,51 @@ namespace PasswordManager
         public Add_Password_Form()
         {
             InitializeComponent();
+            dateTimePickerCreatedDate.Value = DateTime.Now;
+        }
+        public Add_Password_Form(Credential credential)
+        {
+            InitializeComponent();
+            this.credential = credential;
+            try
+            {
+                textBoxEmail.Text = credential.Email;
+                textBoxNote.Text = credential.Note;
+                textBoxPassword.Text = credential.Password;
+                textBoxPincode.Text = credential.Pincode;
+                textBoxURL.Text = credential.URL;
+                textBoxService.Text = credential.ServiceName;
+                dateTimePickerCreatedDate.Value = credential.DateCreated;
+                CheckBoxExpire.Checked = credential.Expires;
+                dateTimePickerExpiryDate.Value = credential.ExpiryDate;
+            }
+            catch (Exception e)
+            {
+                //Null reference
+                Console.WriteLine(e);
+            }
         }
 
-        
-
-        private void label1_Click(object sender, EventArgs e)
+        private void buttonSave_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            int id = Program.passwordBook.GetNewId();
-            Program.passwordBook.AddPassword(textBoxService.Text, textBoxEmail.Text, textBoxPassword.Text, textBoxPincode.Text, textBoxURL.Text, textBoxNote.Text,CheckBoxExpire.Checked ,dateTimePickerExpiryDate.Value);
-
-            Program.mainForm.updatePasswordsView();
-            this.Hide();
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void trackBar1_Scroll(object sender, EventArgs e)
-        {
-            //PasswordTrackBarUpdate();
-        }
-
-        private void trackBar3_Scroll(object sender, EventArgs e)
-        {
-            //PasswordTrackBarUpdate();
-        }
-
-        private void trackBar4_Scroll(object sender, EventArgs e)
-        {
-            //PasswordTrackBarUpdate();
-        }
-
-        private void textBoxPassword_TextChanged(object sender, EventArgs e)
-        {
-            //CopyPasswordToClipboard.Text = "Copy";
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
+            if (credential == null)
+            {
+                credential = new Credential(textBoxService.Text, textBoxEmail.Text, textBoxPassword.Text, textBoxPincode.Text, textBoxNote.Text, 0, textBoxURL.Text, CheckBoxExpire.Checked, dateTimePickerExpiryDate.Value);
+            }
+            else
+            {
+                credential.ServiceName = textBoxService.Text;
+                credential.Email = textBoxEmail.Text;
+                credential.Password = textBoxPassword.Text;
+                credential.Pincode = textBoxPincode.Text;
+                credential.URL = textBoxURL.Text;
+                credential.DateCreated = dateTimePickerCreatedDate.Value;
+                credential.Expires = CheckBoxExpire.Checked;
+                credential.ExpiryDate = dateTimePickerExpiryDate.Value;
+                credential.Note = textBoxNote.Text;
+            }
+            DialogResult = DialogResult.OK;
+            Close();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -119,16 +99,6 @@ namespace PasswordManager
             }
         }
 
-        private void Add_Password_Form_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void buttonShowHidePassword_Click(object sender, EventArgs e)
         {
             if (textBoxPassword.UseSystemPasswordChar)
@@ -147,7 +117,13 @@ namespace PasswordManager
 
         private void buttonCopyPassword_Click(object sender, EventArgs e)
         {
-            Clipboard.SetData(DataFormats.Text, (Object)textBoxPassword.Text);
+            Clipboard.SetData(DataFormats.Text, textBoxPassword.Text);
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }

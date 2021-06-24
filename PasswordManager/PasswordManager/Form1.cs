@@ -17,8 +17,7 @@ namespace PasswordManager
         
         
 
-        private Add_Password_Form newPasswordForm;
-        private PasswordShow passwordShowForm;
+        //private PasswordShow passwordShowForm;
 
         public Form1()
         {
@@ -26,25 +25,45 @@ namespace PasswordManager
             InitializeComponent();
             //LoadPasswords();
         }
+        private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (e.RowIndex < 0)
+            {
+                return;
+            }
+            if (e.ColumnIndex == dataGridView1.Columns["CopyPassword"].Index)
+            {
+                e.Paint(e.CellBounds, DataGridViewPaintParts.All);
+
+                var w = 16;
+                var h = 16;
+                var x = e.CellBounds.Left + (e.CellBounds.Width - w) / 2;
+                var y = e.CellBounds.Top + (e.CellBounds.Height - h) / 2;
+
+                e.Graphics.DrawImage(Properties.Resources.CopyPasswordIcon, new Rectangle(x, y, w, h));
+                e.Handled = true;
+            }
+        }
 
         private void LoadPasswords ()
         {
-            dataGridView1.Rows.Clear();
+            
             using (LoadPasswordFile loadPassword = new LoadPasswordFile())
             {
                 if (loadPassword.ShowDialog() == DialogResult.OK)
                 {
+                    dataGridView1.Rows.Clear();
                     Program.passwordBook = new PasswordBook(loadPassword.getFilePath(), loadPassword.getPassWordHash(), Path.GetFileNameWithoutExtension(loadPassword.getFilePath()));
                     Program.passwordBook.LoadPasswordsFromFile();
                 }
                 else
                 {
-                    Program.passwordBook = new PasswordBook("", null, "Empty");
+                    //Program.passwordBook = new PasswordBook("", null, "Empty");
                 }
             }
 
-            insertDataToGridView(Program.passwordBook.GetCredentials(), dataGridView1);
-            updatePasswordsView();
+            InsertDataToGridView(Program.passwordBook.GetCredentials(), dataGridView1);
+            //iupdatePasswordsView();
         }
 
         private Credential getSelectedCredential ()
@@ -74,7 +93,7 @@ namespace PasswordManager
 
         private void dataGridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if ((e.ColumnIndex == 3 || e.ColumnIndex == 4) && e.Value != null)
+            if ((e.ColumnIndex == 3 || e.ColumnIndex == 5) && e.Value != null)
             {
                 dataGridView1.Rows[e.RowIndex].Tag = e.Value;
                 e.Value = new String('\u25CF', e.Value.ToString().Length);
@@ -82,8 +101,12 @@ namespace PasswordManager
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            
-            
+            if (e.ColumnIndex == dataGridView1.Columns["CopyPassword"].Index)
+            {
+                string result = Convert.ToString(dataGridView1.Rows[e.RowIndex].Cells["Password"].Value);
+                Clipboard.SetData(DataFormats.Text, result);
+            }
+
         }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -130,35 +153,30 @@ namespace PasswordManager
             LoadPasswords();
         }
 
-        
-
-        public void updatePasswordsView ()
-        {
-            dataGridView1.Rows.Clear();
-            List<Credential> passwordData = Program.passwordBook.GetCredentials();
-            if (passwordData.Count > 0)
-            {
-                for (int i = 0; i < passwordData.Count; i++)
-                {
-                    dataGridView1.Rows.Add(passwordData[i].ToStringArray());
-                }
-            }
-        }
-
-        private void insertDataToGridView (List<Credential> data, DataGridView gridView)
+        private void InsertDataToGridView (List<Credential> data, DataGridView gridView)
         {
             if (data.Count > 0)
             {
-                for (int i = 1; i < data.Count; i++)
+                dataGridView1.Rows.Clear();
+                int columnsCount = gridView.Columns.GetColumnCount(DataGridViewElementStates.None);
+                string[] propertyArray = new string[columnsCount];
+                for (int i = 0; i < columnsCount; i++)
                 {
-                    gridView.Rows.Add(data[i].ToStringArray());
+                    DataGridViewColumn column = gridView.Columns[i];
+                    propertyArray[i] = column.Name;
+                }
+                
+                for (int i = 0; i < data.Count; i++)
+                {
+                    
+                    gridView.Rows.Add(data[i].ToStringArray(propertyArray));
                 }
             }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Application.Exit();
+            Application.Exit();
         }
 
         private void programToolStripMenuItem_Click(object sender, EventArgs e)
@@ -168,8 +186,16 @@ namespace PasswordManager
 
         private void newPasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            newPasswordForm = new Add_Password_Form();
-            newPasswordForm.Show();
+            using (Add_Password_Form passwordForm = new Add_Password_Form())
+            {
+                if (passwordForm.ShowDialog() == DialogResult.OK)
+                {
+                    Credential credential = passwordForm.credential;
+                    Program.passwordBook.AddPassword(credential.ServiceName, credential.Email, credential.Password, credential.Pincode, credential.URL, credential.Note, credential.Expires, credential.ExpiryDate);
+                    
+                }
+            }
+            Program.mainForm.InsertDataToGridView(Program.passwordBook.GetCredentials(), dataGridView1);
         }
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -181,14 +207,19 @@ namespace PasswordManager
         {
 
         }
-
+        //Open a selected password, and show it to the user and save changes.
         private void editPasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Credential selectedCredential = getSelectedCredential();
             if (selectedCredential != null)
             {
-                passwordShowForm = new PasswordShow(selectedCredential);
-                passwordShowForm.Show();
+                using (Add_Password_Form passwordForm = new Add_Password_Form(selectedCredential))
+                {
+                    if (passwordForm.ShowDialog() == DialogResult.OK)
+                    {
+                        selectedCredential = passwordForm.credential;
+                    }
+                }
             }
         }
 
@@ -200,9 +231,15 @@ namespace PasswordManager
                 {
                     Credential selectedCredential = getSelectedCredential();
                     Program.passwordBook.RemoveCredential(selectedCredential);
-                    updatePasswordsView();
+                    
                 }
             }
+            InsertDataToGridView(Program.passwordBook.GetCredentials(), dataGridView1);
+        }
+
+        private void setMasterPasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

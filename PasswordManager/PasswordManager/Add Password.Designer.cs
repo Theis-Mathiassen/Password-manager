@@ -51,6 +51,8 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.buttonShowHidePassword = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
+            this.dateTimePickerCreatedDate = new System.Windows.Forms.DateTimePicker();
+            this.labelCreatedDate = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBoxService
@@ -59,9 +61,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxService.Location = new System.Drawing.Point(108, 8);
             this.textBoxService.Name = "textBoxService";
-            this.textBoxService.Size = new System.Drawing.Size(481, 20);
+            this.textBoxService.Size = new System.Drawing.Size(500, 20);
             this.textBoxService.TabIndex = 0;
-            this.textBoxService.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label1
             // 
@@ -71,7 +72,6 @@
             this.label1.Size = new System.Drawing.Size(43, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Service";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -94,7 +94,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 260);
+            this.label4.Location = new System.Drawing.Point(12, 288);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(30, 13);
             this.label4.TabIndex = 0;
@@ -106,7 +106,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxEmail.Location = new System.Drawing.Point(108, 38);
             this.textBoxEmail.Name = "textBoxEmail";
-            this.textBoxEmail.Size = new System.Drawing.Size(481, 20);
+            this.textBoxEmail.Size = new System.Drawing.Size(500, 20);
             this.textBoxEmail.TabIndex = 1;
             // 
             // textBoxPassword
@@ -115,37 +115,36 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxPassword.Location = new System.Drawing.Point(108, 68);
             this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(417, 20);
+            this.textBoxPassword.Size = new System.Drawing.Size(436, 20);
             this.textBoxPassword.TabIndex = 2;
             this.textBoxPassword.UseSystemPasswordChar = true;
-            this.textBoxPassword.TextChanged += new System.EventHandler(this.textBoxPassword_TextChanged);
             // 
             // textBoxNote
             // 
             this.textBoxNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxNote.Location = new System.Drawing.Point(108, 260);
+            this.textBoxNote.Location = new System.Drawing.Point(108, 288);
             this.textBoxNote.Multiline = true;
             this.textBoxNote.Name = "textBoxNote";
-            this.textBoxNote.Size = new System.Drawing.Size(481, 151);
+            this.textBoxNote.Size = new System.Drawing.Size(500, 220);
             this.textBoxNote.TabIndex = 10;
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(514, 417);
-            this.button1.Name = "button1";
+            this.button1.Location = new System.Drawing.Point(533, 513);
+            this.button1.Name = "buttonSave";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 12;
             this.button1.Text = "Save";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // labelExpiryDate
             // 
             this.labelExpiryDate.AutoSize = true;
-            this.labelExpiryDate.Location = new System.Drawing.Point(12, 226);
+            this.labelExpiryDate.Location = new System.Drawing.Point(12, 254);
             this.labelExpiryDate.Name = "labelExpiryDate";
             this.labelExpiryDate.Size = new System.Drawing.Size(59, 13);
             this.labelExpiryDate.TabIndex = 0;
@@ -156,15 +155,15 @@
             this.dateTimePickerExpiryDate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dateTimePickerExpiryDate.Enabled = false;
-            this.dateTimePickerExpiryDate.Location = new System.Drawing.Point(132, 223);
+            this.dateTimePickerExpiryDate.Location = new System.Drawing.Point(132, 251);
             this.dateTimePickerExpiryDate.Name = "dateTimePickerExpiryDate";
-            this.dateTimePickerExpiryDate.Size = new System.Drawing.Size(457, 20);
+            this.dateTimePickerExpiryDate.Size = new System.Drawing.Size(476, 20);
             this.dateTimePickerExpiryDate.TabIndex = 9;
             // 
             // CheckBoxExpire
             // 
             this.CheckBoxExpire.AutoSize = true;
-            this.CheckBoxExpire.Location = new System.Drawing.Point(108, 226);
+            this.CheckBoxExpire.Location = new System.Drawing.Point(108, 254);
             this.CheckBoxExpire.Name = "CheckBoxExpire";
             this.CheckBoxExpire.Size = new System.Drawing.Size(15, 14);
             this.CheckBoxExpire.TabIndex = 8;
@@ -186,7 +185,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxPincode.Location = new System.Drawing.Point(108, 151);
             this.textBoxPincode.Name = "textBoxPincode";
-            this.textBoxPincode.Size = new System.Drawing.Size(481, 20);
+            this.textBoxPincode.Size = new System.Drawing.Size(500, 20);
             this.textBoxPincode.TabIndex = 6;
             // 
             // buttonConfigurePassword
@@ -195,7 +194,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonConfigurePassword.Location = new System.Drawing.Point(108, 108);
             this.buttonConfigurePassword.Name = "buttonConfigurePassword";
-            this.buttonConfigurePassword.Size = new System.Drawing.Size(481, 23);
+            this.buttonConfigurePassword.Size = new System.Drawing.Size(500, 23);
             this.buttonConfigurePassword.TabIndex = 5;
             this.buttonConfigurePassword.Text = "Configure password";
             this.buttonConfigurePassword.UseVisualStyleBackColor = true;
@@ -216,7 +215,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxURL.Location = new System.Drawing.Point(108, 186);
             this.textBoxURL.Name = "textBoxURL";
-            this.textBoxURL.Size = new System.Drawing.Size(483, 20);
+            this.textBoxURL.Size = new System.Drawing.Size(500, 20);
             this.textBoxURL.TabIndex = 7;
             // 
             // buttonCopyPassword
@@ -225,7 +224,7 @@
             this.buttonCopyPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.buttonCopyPassword.ImageIndex = 0;
             this.buttonCopyPassword.ImageList = this.imageList1;
-            this.buttonCopyPassword.Location = new System.Drawing.Point(563, 64);
+            this.buttonCopyPassword.Location = new System.Drawing.Point(582, 64);
             this.buttonCopyPassword.Name = "buttonCopyPassword";
             this.buttonCopyPassword.Size = new System.Drawing.Size(26, 26);
             this.buttonCopyPassword.TabIndex = 4;
@@ -245,7 +244,7 @@
             this.buttonShowHidePassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonShowHidePassword.ImageIndex = 1;
             this.buttonShowHidePassword.ImageList = this.imageList1;
-            this.buttonShowHidePassword.Location = new System.Drawing.Point(531, 64);
+            this.buttonShowHidePassword.Location = new System.Drawing.Point(550, 64);
             this.buttonShowHidePassword.Name = "buttonShowHidePassword";
             this.buttonShowHidePassword.Size = new System.Drawing.Size(26, 26);
             this.buttonShowHidePassword.TabIndex = 3;
@@ -255,19 +254,41 @@
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.Location = new System.Drawing.Point(433, 417);
+            this.buttonCancel.Location = new System.Drawing.Point(452, 513);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 11;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
+            // 
+            // dateTimePickerCreatedDate
+            // 
+            this.dateTimePickerCreatedDate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dateTimePickerCreatedDate.Enabled = false;
+            this.dateTimePickerCreatedDate.Location = new System.Drawing.Point(108, 217);
+            this.dateTimePickerCreatedDate.Name = "dateTimePickerCreatedDate";
+            this.dateTimePickerCreatedDate.Size = new System.Drawing.Size(500, 20);
+            this.dateTimePickerCreatedDate.TabIndex = 15;
+            // 
+            // labelCreatedDate
+            // 
+            this.labelCreatedDate.AutoSize = true;
+            this.labelCreatedDate.Location = new System.Drawing.Point(12, 220);
+            this.labelCreatedDate.Name = "labelCreatedDate";
+            this.labelCreatedDate.Size = new System.Drawing.Size(68, 13);
+            this.labelCreatedDate.TabIndex = 13;
+            this.labelCreatedDate.Text = "Created date";
             // 
             // Add_Password_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(603, 452);
+            this.ClientSize = new System.Drawing.Size(622, 548);
+            this.Controls.Add(this.dateTimePickerCreatedDate);
+            this.Controls.Add(this.labelCreatedDate);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonShowHidePassword);
             this.Controls.Add(this.buttonCopyPassword);
@@ -290,7 +311,6 @@
             this.Controls.Add(this.textBoxService);
             this.Name = "Add_Password_Form";
             this.Text = "Add_Password";
-            this.Load += new System.EventHandler(this.Add_Password_Form_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -319,5 +339,7 @@
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.Button buttonShowHidePassword;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.DateTimePicker dateTimePickerCreatedDate;
+        private System.Windows.Forms.Label labelCreatedDate;
     }
 }

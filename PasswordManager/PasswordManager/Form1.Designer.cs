@@ -46,11 +46,13 @@
             this.Service = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Email = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Password = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CopyPassword = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Pincode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.URL = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateCreated = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ExpiryDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.setMasterPasswordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -67,6 +69,7 @@
             this.Service,
             this.Email,
             this.Password,
+            this.CopyPassword,
             this.Pincode,
             this.URL,
             this.Note,
@@ -75,10 +78,11 @@
             this.dataGridView1.Location = new System.Drawing.Point(12, 27);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 50;
-            this.dataGridView1.Size = new System.Drawing.Size(776, 411);
+            this.dataGridView1.Size = new System.Drawing.Size(945, 411);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
+            this.dataGridView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dataGridView1_CellPainting);
             // 
             // menuStrip1
             // 
@@ -88,7 +92,7 @@
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(969, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -138,6 +142,7 @@
             this.newPasswordToolStripMenuItem,
             this.editPasswordToolStripMenuItem,
             this.removePasswordToolStripMenuItem,
+            this.setMasterPasswordToolStripMenuItem,
             this.settingsToolStripMenuItem});
             this.programToolStripMenuItem.Name = "programToolStripMenuItem";
             this.programToolStripMenuItem.Size = new System.Drawing.Size(45, 20);
@@ -212,6 +217,12 @@
             this.Password.Name = "Password";
             this.Password.ReadOnly = true;
             // 
+            // CopyPassword
+            // 
+            this.CopyPassword.HeaderText = "";
+            this.CopyPassword.Name = "CopyPassword";
+            this.CopyPassword.Width = 24;
+            // 
             // Pincode
             // 
             this.Pincode.HeaderText = "Pincode";
@@ -242,11 +253,18 @@
             this.ExpiryDate.Name = "ExpiryDate";
             this.ExpiryDate.ReadOnly = true;
             // 
+            // setMasterPasswordToolStripMenuItem
+            // 
+            this.setMasterPasswordToolStripMenuItem.Name = "setMasterPasswordToolStripMenuItem";
+            this.setMasterPasswordToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.setMasterPasswordToolStripMenuItem.Text = "Set master password";
+            this.setMasterPasswordToolStripMenuItem.Click += new System.EventHandler(this.setMasterPasswordToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(969, 450);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -280,11 +298,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Service;
         private System.Windows.Forms.DataGridViewTextBoxColumn Email;
         private System.Windows.Forms.DataGridViewTextBoxColumn Password;
+        private System.Windows.Forms.DataGridViewButtonColumn CopyPassword;
         private System.Windows.Forms.DataGridViewTextBoxColumn Pincode;
         private System.Windows.Forms.DataGridViewTextBoxColumn URL;
         private System.Windows.Forms.DataGridViewTextBoxColumn Note;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateCreated;
         private System.Windows.Forms.DataGridViewTextBoxColumn ExpiryDate;
+        private System.Windows.Forms.ToolStripMenuItem setMasterPasswordToolStripMenuItem;
     }
 }
 
