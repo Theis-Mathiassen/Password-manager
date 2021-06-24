@@ -179,17 +179,11 @@ namespace PasswordManager
             }
             return tempID;
         }
-        internal void AddPassword(string serviceName, string email, string password, string pincode, string note)
+        internal void AddPassword (string serviceName, string email, string password, string pincode, string URL, string note, bool expires, DateTime ExpiryDate)
         {
             modified = true;
             int id = GetNewId();
-            passwordData.Add(new Credential(serviceName, email, password, pincode, note, id));
-        }
-        internal void AddPassword (string serviceName, string email, string password, string pincode, string note, DateTime ExpiryDate)
-        {
-            modified = true;
-            int id = GetNewId();
-            passwordData.Add(new Credential(serviceName, email, password, pincode, note, id, ExpiryDate));
+            passwordData.Add(new Credential(serviceName, email, password, pincode, note, id, URL, expires, ExpiryDate));
         }
         
         
@@ -249,6 +243,7 @@ namespace PasswordManager
         public string Email;
         public string Password;
         public string Pincode;
+        public string URL;
         public string Note;
         public DateTime DateCreated;
         public bool Expires;
@@ -258,47 +253,37 @@ namespace PasswordManager
         {
 
         }
-        public Credential(string serviceName, string email, string password, string pincode, string note, int id)
+        public Credential(string serviceName, string email, string password, string pincode, string note, int id, string URL, bool expires, DateTime ExpiryDate)
         {
             this.Id = id;
             this.ServiceName = serviceName;
             this.Email = email;
             this.Password = password;
             this.Pincode = pincode;
+            this.URL = URL;
             this.Note = note;
             DateCreated = DateTime.Now;
-            Expires = false;
-            ExpiryDate = DateTime.Now;
-        }
-        public Credential(string serviceName, string email, string password, string pincode, string note, int id, DateTime ExpiryDate)
-        {
-            this.Id = id;
-            this.ServiceName = serviceName;
-            this.Email = email;
-            this.Password = password;
-            this.Pincode = pincode;
-            this.Note = note;
-            DateCreated = DateTime.Now;
-            Expires = true;
+            Expires = expires;
             this.ExpiryDate = ExpiryDate;
         }
         internal string[] ToStringArray ()
         {
-            string[] result = new string[8];
+            string[] result = new string[9];
             result[0] = Id.ToString();
             result[1] = ServiceName;
             result[2] = Email;
             result[3] = Password;
             result[4] = Pincode;
-            result[5] = Note;
-            result[6] = DateCreated.ToLongDateString();
+            result[5] = URL;
+            result[6] = Note;
+            result[7] = DateCreated.ToLongDateString();
             if (Expires)
             {
-                result[7] = ExpiryDate.ToLongDateString();
+                result[8] = ExpiryDate.ToLongDateString();
             }
             else
             {
-                result[7] = "";
+                result[8] = "";
             }
 
             return result;

@@ -40,15 +40,8 @@ namespace PasswordManager
         private void button1_Click(object sender, EventArgs e)
         {
             int id = Program.passwordBook.GetNewId();
-            if (CheckBoxExpire.Checked)
-            {
-                Program.passwordBook.AddPassword(textBoxWebService.Text, textBoxEmail.Text, textBoxPassword.Text, textBoxPincode.Text, textBoxNote.Text, dateTimePickerExpiryDate.Value);
-            }
-            else
-            {
-                Program.passwordBook.AddPassword(textBoxWebService.Text, textBoxEmail.Text, textBoxPassword.Text, textBoxPincode.Text, textBoxNote.Text);
-            }
-            
+            Program.passwordBook.AddPassword(textBoxService.Text, textBoxEmail.Text, textBoxPassword.Text, textBoxPincode.Text, textBoxURL.Text, textBoxNote.Text,CheckBoxExpire.Checked ,dateTimePickerExpiryDate.Value);
+
             Program.mainForm.updatePasswordsView();
             this.Hide();
         }
@@ -92,31 +85,10 @@ namespace PasswordManager
         {
             //PasswordTrackBarUpdate();
         }
-        
-
-        private void ShowPasswordButton_Click(object sender, EventArgs e)
-        {
-            if (textBoxPassword.UseSystemPasswordChar)
-            {
-                ShowPasswordButton.Text = "Hide";
-                textBoxPassword.UseSystemPasswordChar = false;
-            }
-            else
-            {
-                ShowPasswordButton.Text = "Show";
-                textBoxPassword.UseSystemPasswordChar = true;
-            }
-        }
-
-        private void CopyPasswordToClipboard_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetData(DataFormats.Text, (Object)textBoxPassword.Text);
-            CopyPasswordToClipboard.Text = "Copied";
-        }
 
         private void textBoxPassword_TextChanged(object sender, EventArgs e)
         {
-            CopyPasswordToClipboard.Text = "Copy";
+            //CopyPasswordToClipboard.Text = "Copy";
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -145,6 +117,37 @@ namespace PasswordManager
                     textBoxPassword.Text = passwordConfigoration.Password;
                 }
             }
+        }
+
+        private void Add_Password_Form_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void buttonShowHidePassword_Click(object sender, EventArgs e)
+        {
+            if (textBoxPassword.UseSystemPasswordChar)
+            {
+                buttonShowHidePassword.ImageIndex = 1;
+                //ShowPasswordButton.Text = "Hide";
+                textBoxPassword.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                buttonShowHidePassword.ImageIndex = 2;
+                //ShowPasswordButton.Text = "Show";
+                textBoxPassword.UseSystemPasswordChar = true;
+            }
+        }
+
+        private void buttonCopyPassword_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetData(DataFormats.Text, (Object)textBoxPassword.Text);
         }
     }
 }

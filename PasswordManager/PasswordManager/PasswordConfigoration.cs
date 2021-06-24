@@ -61,5 +61,31 @@ namespace PasswordManager
         {
             DialogResult = DialogResult.OK;
         }
+
+        private void buttonShowHidePassword_Click(object sender, EventArgs e)
+        {
+            if (textBoxPassword.UseSystemPasswordChar)
+            {
+                buttonShowHidePassword.ImageIndex = 1;
+                //ShowPasswordButton.Text = "Hide";
+                textBoxPassword.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                buttonShowHidePassword.ImageIndex = 2;
+                //ShowPasswordButton.Text = "Show";
+                textBoxPassword.UseSystemPasswordChar = true;
+            }
+        }
+
+        private void buttonCopyPassword_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetData(DataFormats.Text, (Object)textBoxPassword.Text);
+        }
+
+        private void textBoxPassword_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

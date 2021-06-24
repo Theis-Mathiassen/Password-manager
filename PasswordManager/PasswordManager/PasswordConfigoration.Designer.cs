@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PasswordConfigoration));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -41,6 +43,9 @@
             this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.buttonSendPassword = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.buttonShowHidePassword = new System.Windows.Forms.Button();
+            this.buttonCopyPassword = new System.Windows.Forms.Button();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar3)).BeginInit();
@@ -168,8 +173,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxPassword.Location = new System.Drawing.Point(13, 13);
             this.textBoxPassword.Name = "textBoxPassword";
-            this.textBoxPassword.Size = new System.Drawing.Size(516, 20);
+            this.textBoxPassword.Size = new System.Drawing.Size(452, 20);
             this.textBoxPassword.TabIndex = 11;
+            this.textBoxPassword.UseSystemPasswordChar = true;
+            this.textBoxPassword.TextChanged += new System.EventHandler(this.textBoxPassword_TextChanged);
             // 
             // buttonSendPassword
             // 
@@ -193,11 +200,46 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // buttonShowHidePassword
+            // 
+            this.buttonShowHidePassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonShowHidePassword.ImageIndex = 2;
+            this.buttonShowHidePassword.ImageList = this.imageList1;
+            this.buttonShowHidePassword.Location = new System.Drawing.Point(471, 9);
+            this.buttonShowHidePassword.Name = "buttonShowHidePassword";
+            this.buttonShowHidePassword.Size = new System.Drawing.Size(26, 26);
+            this.buttonShowHidePassword.TabIndex = 25;
+            this.buttonShowHidePassword.UseVisualStyleBackColor = true;
+            this.buttonShowHidePassword.Click += new System.EventHandler(this.buttonShowHidePassword_Click);
+            // 
+            // buttonCopyPassword
+            // 
+            this.buttonCopyPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCopyPassword.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonCopyPassword.ImageIndex = 0;
+            this.buttonCopyPassword.ImageList = this.imageList1;
+            this.buttonCopyPassword.Location = new System.Drawing.Point(503, 9);
+            this.buttonCopyPassword.Name = "buttonCopyPassword";
+            this.buttonCopyPassword.Size = new System.Drawing.Size(26, 26);
+            this.buttonCopyPassword.TabIndex = 24;
+            this.buttonCopyPassword.UseVisualStyleBackColor = true;
+            this.buttonCopyPassword.Click += new System.EventHandler(this.buttonCopyPassword_Click);
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "CopyPasswordIcon.png");
+            this.imageList1.Images.SetKeyName(1, "HidePasswordIcon.png");
+            this.imageList1.Images.SetKeyName(2, "ShowPasswordIcon.png");
+            // 
             // PasswordConfigoration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(541, 247);
+            this.Controls.Add(this.buttonShowHidePassword);
+            this.Controls.Add(this.buttonCopyPassword);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.buttonSendPassword);
             this.Controls.Add(this.textBoxPassword);
@@ -229,5 +271,8 @@
         private System.Windows.Forms.TextBox textBoxPassword;
         private System.Windows.Forms.Button buttonSendPassword;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonShowHidePassword;
+        private System.Windows.Forms.Button buttonCopyPassword;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }
