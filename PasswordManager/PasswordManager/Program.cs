@@ -105,6 +105,19 @@ namespace PasswordManager
         //The path of the file storing the passwords.
         private string path;
 
+        public PasswordBook(string path, byte[][] keys, string BookName)
+        {
+            passwordData = new List<Credential>();
+            this.path = path;
+            this.keys = keys;
+            this.BookName = BookName;
+        }
+
+        public void RemoveCredential (Credential credential)
+        {
+            passwordData.Remove(credential);
+        }
+
         public bool IsPathEmpty ()
         {
             if (path == null)
@@ -124,13 +137,7 @@ namespace PasswordManager
         {
             this.keys = keys;
         }
-        public PasswordBook (string path, byte[][] keys, string BookName)
-        {
-            passwordData = new List<Credential>();
-            this.path = path;
-            this.keys = keys;
-            this.BookName = BookName;
-        }
+        
         public string GetName ()
         {
             return BookName;

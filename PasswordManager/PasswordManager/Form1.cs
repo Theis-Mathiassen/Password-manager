@@ -194,7 +194,15 @@ namespace PasswordManager
 
         private void removePasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            using (ConfirmAction confirmAction = new ConfirmAction("Delete password!"))
+            {
+                if (confirmAction.ShowDialog() == DialogResult.OK)
+                {
+                    Credential selectedCredential = getSelectedCredential();
+                    Program.passwordBook.RemoveCredential(selectedCredential);
+                    updatePasswordsView();
+                }
+            }
         }
     }
 }
