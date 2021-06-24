@@ -53,6 +53,8 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readMeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.recentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.firstExampleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -80,8 +82,8 @@
             this.dataGridView1.RowHeadersWidth = 50;
             this.dataGridView1.Size = new System.Drawing.Size(945, 411);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
             this.dataGridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dataGridView1_CellFormatting);
             this.dataGridView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dataGridView1_CellPainting);
@@ -166,6 +168,7 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
             this.loadToolStripMenuItem,
+            this.recentToolStripMenuItem,
             this.saveToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -262,6 +265,20 @@
             this.readMeToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.readMeToolStripMenuItem.Text = "Read me";
             // 
+            // recentToolStripMenuItem
+            // 
+            this.recentToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.firstExampleToolStripMenuItem});
+            this.recentToolStripMenuItem.Name = "recentToolStripMenuItem";
+            this.recentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.recentToolStripMenuItem.Text = "Recent";
+            // 
+            // firstExampleToolStripMenuItem
+            // 
+            this.firstExampleToolStripMenuItem.Name = "firstExampleToolStripMenuItem";
+            this.firstExampleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.firstExampleToolStripMenuItem.Text = "FirstExample";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -307,6 +324,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DateCreated;
         private System.Windows.Forms.DataGridViewTextBoxColumn ExpiryDate;
         private System.Windows.Forms.ToolStripMenuItem setMasterPasswordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem recentToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem firstExampleToolStripMenuItem;
     }
 }
 
