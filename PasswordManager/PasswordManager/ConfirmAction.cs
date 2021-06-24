@@ -19,6 +19,7 @@ namespace PasswordManager
         {
             InitializeComponent();
             LabelMessage.Text = confirmText;
+            LabelMessage.MaximumSize = new Size(Width - (4 * LabelMessage.Location.X), Height - (4 * LabelMessage.Location.Y));
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -36,6 +37,11 @@ namespace PasswordManager
         {
             this.DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void Form_ResizeEnd(Object sender, EventArgs e)
+        {
+            LabelMessage.MaximumSize = new Size(Width - (4 * LabelMessage.Location.X), Height - (4 * LabelMessage.Location.Y));
         }
     }
 }

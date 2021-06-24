@@ -133,6 +133,10 @@ namespace PasswordManager
         {
             this.path = path;
         }
+        public byte[][] GetMasterPassword ()
+        {
+            return keys;
+        }
         public void SetMasterPassword (byte[][] keys)
         {
             this.keys = keys;

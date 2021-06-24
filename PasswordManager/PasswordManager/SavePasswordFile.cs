@@ -13,7 +13,6 @@ namespace PasswordManager
     public partial class SavePasswordFile : Form
     {
         public string FilePath;
-        public byte[][] PasswordHash;
         public SavePasswordFile()
         {
             InitializeComponent();
@@ -22,7 +21,6 @@ namespace PasswordManager
         private void buttonConfirm_Click(object sender, EventArgs e)
         {
             FilePath = textBoxFilePath.Text;
-            PasswordHash = SecurityController.GetHashKeys(textBoxPassword.Text);
             DialogResult = DialogResult.OK;
             Close();
         }

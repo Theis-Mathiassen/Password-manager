@@ -48,7 +48,7 @@
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.buttonCancel.Location = new System.Drawing.Point(12, 96);
+            this.buttonCancel.Location = new System.Drawing.Point(12, 227);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(110, 23);
             this.buttonCancel.TabIndex = 1;
@@ -67,7 +67,7 @@
             // buttonConfirm
             // 
             this.buttonConfirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonConfirm.Location = new System.Drawing.Point(187, 96);
+            this.buttonConfirm.Location = new System.Drawing.Point(292, 227);
             this.buttonConfirm.Name = "buttonConfirm";
             this.buttonConfirm.Size = new System.Drawing.Size(113, 23);
             this.buttonConfirm.TabIndex = 0;
@@ -79,13 +79,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(312, 131);
+            this.ClientSize = new System.Drawing.Size(417, 262);
             this.Controls.Add(this.buttonConfirm);
             this.Controls.Add(this.LabelMessage);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.label1);
             this.Name = "ConfirmAction";
             this.Text = "ConfirmAction";
+            this.ResizeEnd += new System.EventHandler(this.Form_ResizeEnd);
             this.ResumeLayout(false);
             this.PerformLayout();
 

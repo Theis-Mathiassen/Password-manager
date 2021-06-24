@@ -13,10 +13,6 @@ namespace PasswordManager
 {
     public partial class Form1 : Form
     {
-        
-        
-        
-
         //private PasswordShow passwordShowForm;
 
         public Form1()
@@ -99,6 +95,21 @@ namespace PasswordManager
                 e.Value = new String('\u25CF', e.Value.ToString().Length);
             }
         }
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex == dataGridView1.Rows.Count - 1)
+            {
+                AddPassword();
+            }
+
+        }
+        private void dataGridView1_CellDoubleClick (object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex <= dataGridView1.Rows.Count - 2)
+            {
+                EditSelectedPassword();
+            }
+        }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == dataGridView1.Columns["CopyPassword"].Index)
@@ -108,19 +119,53 @@ namespace PasswordManager
             }
 
         }
+        private void AddPassword ()
+        {
+            using (Add_Password_Form passwordForm = new Add_Password_Form())
+            {
+                if (passwordForm.ShowDialog() == DialogResult.OK)
+                {
+                    Credential credential = passwordForm.credential;
+                    Program.passwordBook.AddPassword(credential.ServiceName, credential.Email, credential.Password, credential.Pincode, credential.URL, credential.Note, credential.Expires, credential.ExpiryDate);
+                }
+            }
+            Program.mainForm.InsertDataToGridView(Program.passwordBook.GetCredentials(), dataGridView1);
+        }
+        private void EditSelectedPassword ()
+        {
+            Credential selectedCredential = getSelectedCredential();
+            if (selectedCredential != null)
+            {
+                using (Add_Password_Form passwordForm = new Add_Password_Form(selectedCredential))
+                {
+                    if (passwordForm.ShowDialog() == DialogResult.OK)
+                    {
+                        selectedCredential = passwordForm.credential;
+                    }
+                }
+                InsertDataToGridView(Program.passwordBook.GetCredentials(), dataGridView1);
+            }
+        }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Program.passwordBook.IsPathEmpty())
             {
-                using (SavePasswordFile savePassword = new SavePasswordFile())
+                if (Program.passwordBook.GetMasterPassword() == null)
                 {
-                    if (savePassword.ShowDialog() == DialogResult.OK)
+                    MessageBox.Show("No password, setup a master password in: \"Vault\" -> \"Set master password\"");
+                }
+                else
+                {
+                    using (SavePasswordFile savePassword = new SavePasswordFile())
                     {
-                        Program.passwordBook.SetPath(savePassword.FilePath);
-                        Program.passwordBook.SetMasterPassword(savePassword.PasswordHash);
-                        Program.passwordBook.SavePasswordsToFile();
+                        if (savePassword.ShowDialog() == DialogResult.OK)
+                        {
+                            Program.passwordBook.SetPath(savePassword.FilePath);
+                            Program.passwordBook.SavePasswordsToFile();
+                        }
                     }
                 }
+                
             }
             else
             {
@@ -144,9 +189,6 @@ namespace PasswordManager
                     }
                 }
             }
-            
-            
-            
         }
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -186,16 +228,7 @@ namespace PasswordManager
 
         private void newPasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (Add_Password_Form passwordForm = new Add_Password_Form())
-            {
-                if (passwordForm.ShowDialog() == DialogResult.OK)
-                {
-                    Credential credential = passwordForm.credential;
-                    Program.passwordBook.AddPassword(credential.ServiceName, credential.Email, credential.Password, credential.Pincode, credential.URL, credential.Note, credential.Expires, credential.ExpiryDate);
-                    
-                }
-            }
-            Program.mainForm.InsertDataToGridView(Program.passwordBook.GetCredentials(), dataGridView1);
+            AddPassword();
         }
 
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -210,19 +243,26 @@ namespace PasswordManager
         //Open a selected password, and show it to the user and save changes.
         private void editPasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Credential selectedCredential = getSelectedCredential();
-            if (selectedCredential != null)
+            EditSelectedPassword();
+        }
+
+        private void SetMasterPassword ()
+        {
+            using (ConfirmAction confirm = new ConfirmAction("When choosing a master password, it is very important to create a long yet memorable password. Select a long phrase that you will remember, but is not that easy to guess. Include at least one of each: upper case letters, lower case letters, numbers and special characters. Select a passphrase that is easy to type, especially on a cellphone keyboard since you will be typing this passphrase in many times throughout the day / week."))
             {
-                using (Add_Password_Form passwordForm = new Add_Password_Form(selectedCredential))
+                if (confirm.ShowDialog() == DialogResult.OK)
                 {
-                    if (passwordForm.ShowDialog() == DialogResult.OK)
+                    using (SetMasterPassword setMasterPassword = new SetMasterPassword())
                     {
-                        selectedCredential = passwordForm.credential;
+                        if (setMasterPassword.ShowDialog() == DialogResult.OK)
+                        {
+                            Program.passwordBook.SetMasterPassword(SecurityController.GetHashKeys(setMasterPassword.password));
+                        }
                     }
                 }
             }
+            
         }
-
         private void removePasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (ConfirmAction confirmAction = new ConfirmAction("Delete password!"))
@@ -239,7 +279,34 @@ namespace PasswordManager
 
         private void setMasterPasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (Program.passwordBook.GetMasterPassword() == null)
+            {
+                SetMasterPassword();
+            }
+            else
+            {
+                using (DisplayMessageAndReturnInput inputForm = new DisplayMessageAndReturnInput("Input existing password"))
+                {
+                    if (inputForm.ShowDialog() == DialogResult.OK)
+                    {
+                        Console.WriteLine(inputForm.input);
+                        
+                        byte[][] ExistingPassword = Program.passwordBook.GetMasterPassword();
+                        byte[][] InputPassword = SecurityController.GetHashKeys(inputForm.input);
+                        bool result = true;
+                        for (int i = 0; i < ExistingPassword.Length; i++)
+                        {
+                            if (!ExistingPassword[i].SequenceEqual(InputPassword[i])) {
+                                result = false;
+                            }
+                        }
+                        if (result)
+                        {
+                            SetMasterPassword();
+                        }
+                    }
+                }
+            }
         }
     }
 }

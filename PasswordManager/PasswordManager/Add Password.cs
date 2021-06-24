@@ -104,13 +104,11 @@ namespace PasswordManager
             if (textBoxPassword.UseSystemPasswordChar)
             {
                 buttonShowHidePassword.ImageIndex = 1;
-                //ShowPasswordButton.Text = "Hide";
                 textBoxPassword.UseSystemPasswordChar = false;
             }
             else
             {
                 buttonShowHidePassword.ImageIndex = 2;
-                //ShowPasswordButton.Text = "Show";
                 textBoxPassword.UseSystemPasswordChar = true;
             }
         }
