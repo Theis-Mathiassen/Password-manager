@@ -43,6 +43,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.recentToolStripMenuItem = new System.Windows.Forms.ToolStripComboBox();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.programToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,8 +54,6 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.readMeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.recentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.firstExampleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -162,6 +161,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(969, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // fileToolStripMenuItem
             // 
@@ -179,28 +179,38 @@
             // newToolStripMenuItem
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.newToolStripMenuItem.Text = "New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.loadToolStripMenuItem.Text = "Open";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
+            // 
+            // recentToolStripMenuItem
+            // 
+            this.recentToolStripMenuItem.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.recentToolStripMenuItem.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.recentToolStripMenuItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.recentToolStripMenuItem.Name = "recentToolStripMenuItem";
+            this.recentToolStripMenuItem.Size = new System.Drawing.Size(177, 23);
+            this.recentToolStripMenuItem.DropDownClosed += new System.EventHandler(this.RecentToolStripMenu_DropdownClosed);
+            this.recentToolStripMenuItem.Click += new System.EventHandler(this.recentToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.saveToolStripMenuItem.Text = "Save";
             this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(237, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -265,20 +275,6 @@
             this.readMeToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
             this.readMeToolStripMenuItem.Text = "Read me";
             // 
-            // recentToolStripMenuItem
-            // 
-            this.recentToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.firstExampleToolStripMenuItem});
-            this.recentToolStripMenuItem.Name = "recentToolStripMenuItem";
-            this.recentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.recentToolStripMenuItem.Text = "Recent";
-            // 
-            // firstExampleToolStripMenuItem
-            // 
-            this.firstExampleToolStripMenuItem.Name = "firstExampleToolStripMenuItem";
-            this.firstExampleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.firstExampleToolStripMenuItem.Text = "FirstExample";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -289,6 +285,9 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_Closing);
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -324,8 +323,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DateCreated;
         private System.Windows.Forms.DataGridViewTextBoxColumn ExpiryDate;
         private System.Windows.Forms.ToolStripMenuItem setMasterPasswordToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem recentToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem firstExampleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripComboBox recentToolStripMenuItem;
     }
 }
 

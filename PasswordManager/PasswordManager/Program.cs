@@ -25,7 +25,7 @@ namespace PasswordManager
         [STAThread]
         static void Main()
         {
-
+            Config.LoadFromFile();
             passwordBook = new PasswordBook(null, null, "Empty");
             
             Application.EnableVisualStyles();
@@ -33,7 +33,9 @@ namespace PasswordManager
             mainForm = new Form1();
             mainForm.Text = passwordBook.GetName();
             Application.Run(mainForm);
-            
+
+            Config.SaveToFile();
+
         }
 
         internal static string generatePassword(int length, int numberCount, int symbolCount)
@@ -89,44 +91,7 @@ namespace PasswordManager
         
     }
 
-    readonly public struct FileData
-    {
-        public FileData(string Path, DateTime dateTime)
-        {
-            this.Path = Path;
-            this.Date = dateTime;
-        }
-
-        public string Path { get; }
-        public DateTime Date { get; }
-    }
-
-    public abstract class Config
-    {
-        private List<FileData> PreviousPaths;
-        private string LastPath;
-        public Config ()
-        {
-            PreviousPaths = new List<FileData>();
-        }
-
-        public void SetLastPath (string Path)
-        {
-            LastPath = Path;
-        }
-        public string GetLastPath ()
-        {
-            return LastPath;
-        }
-
-        public void AddPreviousPath ()
-        {
-
-        }
-
-
-
-    }
+    
     
 
     /// <summary>
@@ -248,11 +213,13 @@ namespace PasswordManager
 
         internal void SavePasswordsToFile()
         {
+            Config.SetLastPath(path);
+            Config.AddPreviousPath(path);
             BookName = Path.GetFileNameWithoutExtension(path);
             Program.mainForm.Text = BookName;
             string JSONText = SavePasswordsToJSON();
             string encryptedPasswords = SecurityController.Encrypt(keys, JSONText);
-            File.WriteAllText(path, JSONText);
+            //File.WriteAllText(path, JSONText);
             File.WriteAllText(path, encryptedPasswords);
 
         }

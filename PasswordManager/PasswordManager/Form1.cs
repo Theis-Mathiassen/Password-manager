@@ -16,12 +16,45 @@ namespace PasswordManager
         private string LastOpened;
         //private PasswordShow passwordShowForm;
 
+
+
         public Form1()
         {
             
             InitializeComponent();
-            //LoadPasswords();
-            Setting
+            RecentToolStripMenuItemUpdateValues();
+            
+        }
+        private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            /*
+            // Determine if text has changed in the textbox by comparing to original text.
+            
+            // Display a MsgBox asking the user to save changes or abort.
+            if (MessageBox.Show("Are you sure you want to close the application?", "My Application", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                e.Cancel = false;
+            }
+            else
+            {
+                // Cancel the Closing event from closing the form.
+                e.Cancel = true;
+                // Call method to save file...
+            }
+            */
+        }
+
+        public void RecentToolStripMenuItemUpdateValues ()
+        {
+            List<string> pathData = Config.GetPreviousPath(-1);
+            for (int i = 0; i < pathData.Count; i++)
+            {
+                recentToolStripMenuItem.Items.Add(pathData[i]);
+            }
+        }
+        private void RecentToolStripMenu_DropdownClosed (object sender, EventArgs e)
+        {
+            LoadPasswords(recentToolStripMenuItem.Text);
         }
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
@@ -164,22 +197,23 @@ namespace PasswordManager
             {
                 if (Program.passwordBook.IsModified())
                 {
-                    using (Form form = new ConfirmAction("Overwrite current save file."))
+                    DialogResult ConfirmDialogResult = MessageBox.Show("Are you sure you want to overwrite the current save file?", "Confirm save", MessageBoxButtons.YesNo);
+                    if (ConfirmDialogResult == DialogResult.Yes)
                     {
-                        DialogResult ConfirmDialogResult = form.ShowDialog();
-                        if (ConfirmDialogResult == DialogResult.OK)
-                        {
-                            Program.passwordBook.SavePasswordsToFile();
-                        }
-                        else if (ConfirmDialogResult == DialogResult.Cancel)
-                        {
-
-                        }
-                        else
-                        {
-
-                        }
+                        Program.passwordBook.SavePasswordsToFile();
                     }
+                    else if (ConfirmDialogResult == DialogResult.No)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+                else
+                {
+                    Program.passwordBook.SavePasswordsToFile();
                 }
             }
         }
@@ -251,41 +285,44 @@ namespace PasswordManager
                 InsertDataToGridView(Program.passwordBook.GetCredentials(), dataGridView1);
             }
         }
-        private void LoadPasswords()
+        private void LoadPasswords(string passwordPath = "")
         {
-            string passwordPath = "";
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            if (!File.Exists(passwordPath) || !(Path.GetExtension(passwordPath) == ".JSON"))
             {
-                openFileDialog.InitialDirectory = LastOpened ?? "c:\\";
-                openFileDialog.Filter = "JSON files (*.JSON)|*.JSON";
-                openFileDialog.FilterIndex = 2;
-                openFileDialog.RestoreDirectory = true;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
-                    //Get the path of specified file
-                    passwordPath = openFileDialog.FileName;
+                    openFileDialog.InitialDirectory = LastOpened ?? "c:\\";
+                    openFileDialog.Filter = "JSON files (*.JSON)|*.JSON";
+                    openFileDialog.FilterIndex = 2;
+                    openFileDialog.RestoreDirectory = true;
+
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        //Get the path of specified file
+                        passwordPath = openFileDialog.FileName;
+                    }
                 }
-            }
+            }            
 
             if (File.Exists(passwordPath) && Path.GetExtension(passwordPath) == ".JSON")
             {
                 LastOpened = passwordPath;
                 string inputPassword = "";
-                using (DisplayMessageAndReturnInput MessageInput = new DisplayMessageAndReturnInput("Enter password"))
+                using (DisplayMessageAndReturnInput MessageInput = new DisplayMessageAndReturnInput("Loading: " + passwordPath + Environment.NewLine + Environment.NewLine + "Enter password below:"))
                 {
+                    MessageInput.Name = Path.GetFileNameWithoutExtension(passwordPath);
                     if (MessageInput.ShowDialog() == DialogResult.OK)
                     {
                         inputPassword = MessageInput.input;
+                        string encryptedString = File.ReadAllText(passwordPath);
+                        string JSONString = SecurityController.Decrypt(SecurityController.GetHashKeys(inputPassword), encryptedString);
+                        if (JSONString != null)
+                        {
+                            Program.passwordBook = new PasswordBook(passwordPath, SecurityController.GetHashKeys(inputPassword), Path.GetFileNameWithoutExtension(passwordPath));
+                            Program.passwordBook.LoadPasswordsFromFile();
+                            InsertDataToGridView(Program.passwordBook.GetCredentials(), dataGridView1);
+                        }
                     }
-                }
-                string encryptedString = File.ReadAllText(passwordPath);
-                string JSONString = SecurityController.Decrypt(SecurityController.GetHashKeys(inputPassword), encryptedString);
-                if (JSONString != null)
-                {
-                    Program.passwordBook = new PasswordBook(passwordPath, SecurityController.GetHashKeys(inputPassword), Path.GetFileNameWithoutExtension(passwordPath));
-                    Program.passwordBook.LoadPasswordsFromFile();
-                    InsertDataToGridView(Program.passwordBook.GetCredentials(), dataGridView1);
                 }
             }
         }
@@ -330,6 +367,34 @@ namespace PasswordManager
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
 
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void toolStripComboBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void recentToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            if (Config.GetLastPath() != null)
+            {
+                LoadPasswords(Config.GetLastPath());
+            }
         }
     }
 }
