@@ -109,14 +109,10 @@ namespace PasswordManager
         }
         private void removePasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (ConfirmAction confirmAction = new ConfirmAction("Delete password!"))
+            if (MessageBox.Show("Are you sure you want to delete this password?", "Delete password", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                if (confirmAction.ShowDialog() == DialogResult.OK)
-                {
-                    Credential selectedCredential = getSelectedCredential();
-                    Program.passwordBook.RemoveCredential(selectedCredential);
-
-                }
+                Credential selectedCredential = getSelectedCredential();
+                Program.passwordBook.RemoveCredential(selectedCredential);
             }
             InsertDataToGridView(Program.passwordBook.GetCredentials(), dataGridView1);
         }
@@ -348,20 +344,22 @@ namespace PasswordManager
         }
         private void SetMasterPassword ()
         {
-            using (ConfirmAction confirm = new ConfirmAction("When choosing a master password, it is very important to create a long yet memorable password. Select a long phrase that you will remember, but is not that easy to guess. Include at least one of each: upper case letters, lower case letters, numbers and special characters. Select a passphrase that is easy to type, especially on a cellphone keyboard since you will be typing this passphrase in many times throughout the day / week."))
+            if (MessageBox.Show("When choosing a master password, it is very important to create a long yet memorable password." +
+                " Select a long phrase that you will remember, but is not that easy to guess. " +
+                "Include at least one of each: upper case letters, lower case letters, numbers and special characters. " +
+                "Select a passphrase that is easy to type, especially on a cellphone keyboard since you will be typing" +
+                " this passphrase in many times throughout the day / week.",
+                "Confirm setting master password",
+                MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                if (confirm.ShowDialog() == DialogResult.OK)
+                using (SetMasterPassword setMasterPassword = new SetMasterPassword())
                 {
-                    using (SetMasterPassword setMasterPassword = new SetMasterPassword())
+                    if (setMasterPassword.ShowDialog() == DialogResult.OK)
                     {
-                        if (setMasterPassword.ShowDialog() == DialogResult.OK)
-                        {
-                            Program.passwordBook.SetMasterPassword(SecurityController.GetHashKeys(setMasterPassword.password));
-                        }
+                        Program.passwordBook.SetMasterPassword(SecurityController.GetHashKeys(setMasterPassword.password));
                     }
                 }
             }
-            
         }
 
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
