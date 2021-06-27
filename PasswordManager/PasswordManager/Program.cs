@@ -25,6 +25,7 @@ namespace PasswordManager
         [STAThread]
         static void Main()
         {
+
             passwordBook = new PasswordBook(null, null, "Empty");
             
             Application.EnableVisualStyles();
@@ -86,6 +87,45 @@ namespace PasswordManager
             return result;
         }
         
+    }
+
+    readonly public struct FileData
+    {
+        public FileData(string Path, DateTime dateTime)
+        {
+            this.Path = Path;
+            this.Date = dateTime;
+        }
+
+        public string Path { get; }
+        public DateTime Date { get; }
+    }
+
+    public abstract class Config
+    {
+        private List<FileData> PreviousPaths;
+        private string LastPath;
+        public Config ()
+        {
+            PreviousPaths = new List<FileData>();
+        }
+
+        public void SetLastPath (string Path)
+        {
+            LastPath = Path;
+        }
+        public string GetLastPath ()
+        {
+            return LastPath;
+        }
+
+        public void AddPreviousPath ()
+        {
+
+        }
+
+
+
     }
     
 
@@ -208,7 +248,7 @@ namespace PasswordManager
 
         internal void SavePasswordsToFile()
         {
-            BookName = Path.GetFileName(path);
+            BookName = Path.GetFileNameWithoutExtension(path);
             Program.mainForm.Text = BookName;
             string JSONText = SavePasswordsToJSON();
             string encryptedPasswords = SecurityController.Encrypt(keys, JSONText);
@@ -218,7 +258,7 @@ namespace PasswordManager
         }
         internal bool LoadPasswordsFromFile()
         {
-            BookName = Path.GetFileName(path);
+            BookName = Path.GetFileNameWithoutExtension(path);
             Program.mainForm.Text = BookName;
             bool result = true;
             ClearPasswords();

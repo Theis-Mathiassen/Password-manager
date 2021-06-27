@@ -21,6 +21,7 @@ namespace PasswordManager
             
             InitializeComponent();
             //LoadPasswords();
+            Setting
         }
         private void dataGridView1_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
         {
