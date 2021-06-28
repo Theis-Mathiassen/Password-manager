@@ -29,11 +29,16 @@ namespace PasswordManager
         public string Path { get; set; }
         public DateTime Date { get; set; }
     }
+    public class Activity
+    {
+        public DateTime usageTime;
+    }
 
     public class ConfigObject
     {
         public List<SaveFileData> PreviousPaths = new List<SaveFileData>();
         public SaveFileData LastPath;
+        public List<Activity> activities;
     }
 
     public static class Config
@@ -129,7 +134,7 @@ namespace PasswordManager
                 CObject = JsonConvert.DeserializeObject<ConfigObject>(JSONString);
                 CObject.PreviousPaths.RemoveAll(item => item.Path == null);
             }
-            catch (IOException e)
+            catch (IOException)
             {
                 CObject = new ConfigObject();
             }

@@ -50,7 +50,7 @@
             this.textBoxInput.Location = new System.Drawing.Point(16, 143);
             this.textBoxInput.Name = "textBoxInput";
             this.textBoxInput.Size = new System.Drawing.Size(421, 20);
-            this.textBoxInput.TabIndex = 1;
+            this.textBoxInput.TabIndex = 0;
             // 
             // buttonCancel
             // 
@@ -69,7 +69,7 @@
             this.buttonOK.Location = new System.Drawing.Point(281, 169);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
-            this.buttonOK.TabIndex = 3;
+            this.buttonOK.TabIndex = 1;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -94,7 +94,7 @@
         #endregion
 
         private System.Windows.Forms.Label labelMessage;
-        private System.Windows.Forms.TextBox textBoxInput;
+        public System.Windows.Forms.TextBox textBoxInput;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonOK;
     }

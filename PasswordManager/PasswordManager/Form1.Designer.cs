@@ -272,7 +272,7 @@
             // readMeToolStripMenuItem
             // 
             this.readMeToolStripMenuItem.Name = "readMeToolStripMenuItem";
-            this.readMeToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
+            this.readMeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.readMeToolStripMenuItem.Text = "Read me";
             // 
             // Form1

@@ -53,6 +53,7 @@
             this.textBoxPassword.Size = new System.Drawing.Size(299, 20);
             this.textBoxPassword.TabIndex = 0;
             this.textBoxPassword.UseSystemPasswordChar = true;
+            this.textBoxPassword.TextChanged += new System.EventHandler(this.textBoxPassword_TextChanged);
             // 
             // label1
             // 
@@ -79,7 +80,7 @@
             this.buttonShowHidePassword.Location = new System.Drawing.Point(320, 21);
             this.buttonShowHidePassword.Name = "buttonShowHidePassword";
             this.buttonShowHidePassword.Size = new System.Drawing.Size(26, 26);
-            this.buttonShowHidePassword.TabIndex = 5;
+            this.buttonShowHidePassword.TabIndex = 1;
             this.buttonShowHidePassword.UseVisualStyleBackColor = true;
             this.buttonShowHidePassword.Click += new System.EventHandler(this.buttonShowHidePassword_Click);
             // 
@@ -92,7 +93,7 @@
             this.buttonCopyPassword.Location = new System.Drawing.Point(352, 21);
             this.buttonCopyPassword.Name = "buttonCopyPassword";
             this.buttonCopyPassword.Size = new System.Drawing.Size(26, 26);
-            this.buttonCopyPassword.TabIndex = 6;
+            this.buttonCopyPassword.TabIndex = 2;
             this.buttonCopyPassword.UseVisualStyleBackColor = true;
             this.buttonCopyPassword.Click += new System.EventHandler(this.buttonCopyPassword_Click);
             // 
@@ -104,7 +105,7 @@
             this.buttonShowHideConfirmPassword.Location = new System.Drawing.Point(320, 78);
             this.buttonShowHideConfirmPassword.Name = "buttonShowHideConfirmPassword";
             this.buttonShowHideConfirmPassword.Size = new System.Drawing.Size(26, 26);
-            this.buttonShowHideConfirmPassword.TabIndex = 8;
+            this.buttonShowHideConfirmPassword.TabIndex = 4;
             this.buttonShowHideConfirmPassword.UseVisualStyleBackColor = true;
             this.buttonShowHideConfirmPassword.Click += new System.EventHandler(this.buttonShowHideConfirmPassword_Click);
             // 
@@ -117,7 +118,7 @@
             this.buttonCopyConfirmPassword.Location = new System.Drawing.Point(352, 78);
             this.buttonCopyConfirmPassword.Name = "buttonCopyConfirmPassword";
             this.buttonCopyConfirmPassword.Size = new System.Drawing.Size(26, 26);
-            this.buttonCopyConfirmPassword.TabIndex = 9;
+            this.buttonCopyConfirmPassword.TabIndex = 5;
             this.buttonCopyConfirmPassword.UseVisualStyleBackColor = true;
             this.buttonCopyConfirmPassword.Click += new System.EventHandler(this.buttonCopyConfirmPassword_Click);
             // 
@@ -128,7 +129,7 @@
             this.textBoxConfirmPassword.Location = new System.Drawing.Point(15, 82);
             this.textBoxConfirmPassword.Name = "textBoxConfirmPassword";
             this.textBoxConfirmPassword.Size = new System.Drawing.Size(299, 20);
-            this.textBoxConfirmPassword.TabIndex = 7;
+            this.textBoxConfirmPassword.TabIndex = 3;
             this.textBoxConfirmPassword.UseSystemPasswordChar = true;
             this.textBoxConfirmPassword.TextChanged += new System.EventHandler(this.textBoxConfirmPassword_TextChanged);
             // 
@@ -156,10 +157,10 @@
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(303, 159);
+            this.buttonOK.Location = new System.Drawing.Point(222, 159);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
-            this.buttonOK.TabIndex = 12;
+            this.buttonOK.TabIndex = 6;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -167,10 +168,10 @@
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.Location = new System.Drawing.Point(222, 159);
+            this.buttonCancel.Location = new System.Drawing.Point(303, 159);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 13;
+            this.buttonCancel.TabIndex = 7;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);

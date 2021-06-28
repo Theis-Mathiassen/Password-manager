@@ -20,10 +20,8 @@ namespace PasswordManager
 
         public Form1()
         {
-            
             InitializeComponent();
             RecentToolStripMenuItemUpdateValues();
-            
         }
         private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -111,6 +109,7 @@ namespace PasswordManager
         {
             if (MessageBox.Show("Are you sure you want to delete this password?", "Delete password", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
+                Console.WriteLine("Hello");
                 Credential selectedCredential = getSelectedCredential();
                 Program.passwordBook.RemoveCredential(selectedCredential);
             }
@@ -124,14 +123,15 @@ namespace PasswordManager
             }
             else
             {
-                using (DisplayMessageAndReturnInput inputForm = new DisplayMessageAndReturnInput("Input existing password"))
+                using (DisplayMessageAndReturnInput MessageInput = new DisplayMessageAndReturnInput("Input existing password"))
                 {
-                    if (inputForm.ShowDialog() == DialogResult.OK)
+                    MessageInput.textBoxInput.UseSystemPasswordChar = true;
+                    if (MessageInput.ShowDialog() == DialogResult.OK)
                     {
-                        Console.WriteLine(inputForm.input);
+                        Console.WriteLine(MessageInput.input);
 
                         byte[][] ExistingPassword = Program.passwordBook.GetMasterPassword();
-                        byte[][] InputPassword = SecurityController.GetHashKeys(inputForm.input);
+                        byte[][] InputPassword = SecurityController.GetHashKeys(MessageInput.input);
                         bool result = true;
                         for (int i = 0; i < ExistingPassword.Length; i++)
                         {
@@ -235,7 +235,11 @@ namespace PasswordManager
         {
             Credential result = null;
             Int32 selectedCellCount = dataGridView1.GetCellCount(DataGridViewElementStates.Selected);
-            if (selectedCellCount > 0)
+            if (selectedCellCount > 1)
+            {
+                MessageBox.Show("Too many passwords selected.");
+            }
+            else if (selectedCellCount == 1)
             {
                 DataGridViewRow selectedRow = dataGridView1.Rows[dataGridView1.SelectedCells[selectedCellCount - 1].RowIndex];
                 long CredentialID = Convert.ToInt64(selectedRow.Cells["ID"].Value);
@@ -306,6 +310,7 @@ namespace PasswordManager
                 string inputPassword = "";
                 using (DisplayMessageAndReturnInput MessageInput = new DisplayMessageAndReturnInput("Loading: " + passwordPath + Environment.NewLine + Environment.NewLine + "Enter password below:"))
                 {
+                    MessageInput.textBoxInput.UseSystemPasswordChar = true;
                     MessageInput.Name = Path.GetFileNameWithoutExtension(passwordPath);
                     if (MessageInput.ShowDialog() == DialogResult.OK)
                     {
@@ -324,9 +329,9 @@ namespace PasswordManager
         }
         private void InsertDataToGridView (List<Credential> data, DataGridView gridView)
         {
+            dataGridView1.Rows.Clear();
             if (data.Count > 0)
             {
-                dataGridView1.Rows.Clear();
                 int columnsCount = gridView.Columns.GetColumnCount(DataGridViewElementStates.None);
                 string[] propertyArray = new string[columnsCount];
                 for (int i = 0; i < columnsCount; i++)

@@ -53,6 +53,8 @@
             this.buttonCancel = new System.Windows.Forms.Button();
             this.dateTimePickerCreatedDate = new System.Windows.Forms.DateTimePicker();
             this.labelCreatedDate = new System.Windows.Forms.Label();
+            this.buttonShowHidePincode = new System.Windows.Forms.Button();
+            this.buttonCopyPincode = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxService
@@ -128,13 +130,13 @@
             this.textBoxNote.Multiline = true;
             this.textBoxNote.Name = "textBoxNote";
             this.textBoxNote.Size = new System.Drawing.Size(500, 220);
-            this.textBoxNote.TabIndex = 10;
+            this.textBoxNote.TabIndex = 11;
             // 
             // button1
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(533, 513);
-            this.button1.Name = "buttonSave";
+            this.button1.Location = new System.Drawing.Point(454, 514);
+            this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 12;
             this.button1.Text = "Save";
@@ -158,7 +160,7 @@
             this.dateTimePickerExpiryDate.Location = new System.Drawing.Point(132, 251);
             this.dateTimePickerExpiryDate.Name = "dateTimePickerExpiryDate";
             this.dateTimePickerExpiryDate.Size = new System.Drawing.Size(476, 20);
-            this.dateTimePickerExpiryDate.TabIndex = 9;
+            this.dateTimePickerExpiryDate.TabIndex = 10;
             // 
             // CheckBoxExpire
             // 
@@ -166,7 +168,7 @@
             this.CheckBoxExpire.Location = new System.Drawing.Point(108, 254);
             this.CheckBoxExpire.Name = "CheckBoxExpire";
             this.CheckBoxExpire.Size = new System.Drawing.Size(15, 14);
-            this.CheckBoxExpire.TabIndex = 8;
+            this.CheckBoxExpire.TabIndex = 9;
             this.CheckBoxExpire.UseVisualStyleBackColor = true;
             this.CheckBoxExpire.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
@@ -185,8 +187,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxPincode.Location = new System.Drawing.Point(108, 151);
             this.textBoxPincode.Name = "textBoxPincode";
-            this.textBoxPincode.Size = new System.Drawing.Size(500, 20);
+            this.textBoxPincode.Size = new System.Drawing.Size(436, 20);
             this.textBoxPincode.TabIndex = 6;
+            this.textBoxPincode.UseSystemPasswordChar = true;
             // 
             // buttonConfigurePassword
             // 
@@ -254,10 +257,10 @@
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonCancel.Location = new System.Drawing.Point(452, 513);
+            this.buttonCancel.Location = new System.Drawing.Point(535, 514);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
-            this.buttonCancel.TabIndex = 11;
+            this.buttonCancel.TabIndex = 13;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -266,11 +269,10 @@
             // 
             this.dateTimePickerCreatedDate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dateTimePickerCreatedDate.Enabled = false;
             this.dateTimePickerCreatedDate.Location = new System.Drawing.Point(108, 217);
             this.dateTimePickerCreatedDate.Name = "dateTimePickerCreatedDate";
             this.dateTimePickerCreatedDate.Size = new System.Drawing.Size(500, 20);
-            this.dateTimePickerCreatedDate.TabIndex = 15;
+            this.dateTimePickerCreatedDate.TabIndex = 8;
             // 
             // labelCreatedDate
             // 
@@ -281,12 +283,39 @@
             this.labelCreatedDate.TabIndex = 13;
             this.labelCreatedDate.Text = "Created date";
             // 
+            // buttonShowHidePincode
+            // 
+            this.buttonShowHidePincode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonShowHidePincode.ImageIndex = 1;
+            this.buttonShowHidePincode.ImageList = this.imageList1;
+            this.buttonShowHidePincode.Location = new System.Drawing.Point(550, 147);
+            this.buttonShowHidePincode.Name = "buttonShowHidePincode";
+            this.buttonShowHidePincode.Size = new System.Drawing.Size(26, 26);
+            this.buttonShowHidePincode.TabIndex = 14;
+            this.buttonShowHidePincode.UseVisualStyleBackColor = true;
+            this.buttonShowHidePincode.Click += new System.EventHandler(this.buttonShowHidePincode_Click);
+            // 
+            // buttonCopyPincode
+            // 
+            this.buttonCopyPincode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCopyPincode.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.buttonCopyPincode.ImageIndex = 0;
+            this.buttonCopyPincode.ImageList = this.imageList1;
+            this.buttonCopyPincode.Location = new System.Drawing.Point(582, 147);
+            this.buttonCopyPincode.Name = "buttonCopyPincode";
+            this.buttonCopyPincode.Size = new System.Drawing.Size(26, 26);
+            this.buttonCopyPincode.TabIndex = 15;
+            this.buttonCopyPincode.UseVisualStyleBackColor = true;
+            this.buttonCopyPincode.Click += new System.EventHandler(this.buttonCopyPincode_Click);
+            // 
             // Add_Password_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(622, 548);
+            this.Controls.Add(this.buttonShowHidePincode);
+            this.Controls.Add(this.buttonCopyPincode);
             this.Controls.Add(this.dateTimePickerCreatedDate);
             this.Controls.Add(this.labelCreatedDate);
             this.Controls.Add(this.buttonCancel);
@@ -341,5 +370,7 @@
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.DateTimePicker dateTimePickerCreatedDate;
         private System.Windows.Forms.Label labelCreatedDate;
+        private System.Windows.Forms.Button buttonShowHidePincode;
+        private System.Windows.Forms.Button buttonCopyPincode;
     }
 }

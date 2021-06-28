@@ -68,14 +68,7 @@ namespace PasswordManager
 
         private void textBoxConfirmPassword_TextChanged(object sender, EventArgs e)
         {
-            if (textBoxPassword.Text != textBoxConfirmPassword.Text)
-            {
-                label3.Visible = true;
-            }
-            else
-            {
-                label3.Visible = false;
-            }
+            ComparePasswords();
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -92,6 +85,30 @@ namespace PasswordManager
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        private void textBoxPassword_TextChanged(object sender, EventArgs e)
+        {
+            if (textBoxConfirmPassword.Text != null)
+            {
+                ComparePasswords();
+            }
+            else
+            {
+                label3.Visible = false;
+            }
+        }
+
+        private void ComparePasswords ()
+        {
+            if (textBoxPassword.Text != textBoxConfirmPassword.Text)
+            {
+                label3.Visible = true;
+            }
+            else
+            {
+                label3.Visible = false;
+            }
         }
     }
 }

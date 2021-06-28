@@ -123,5 +123,24 @@ namespace PasswordManager
             DialogResult = DialogResult.Cancel;
             Close();
         }
+
+        private void buttonShowHidePincode_Click(object sender, EventArgs e)
+        {
+            if (textBoxPincode.UseSystemPasswordChar)
+            {
+                buttonShowHidePincode.ImageIndex = 1;
+                textBoxPincode.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                buttonShowHidePincode.ImageIndex = 2;
+                textBoxPincode.UseSystemPasswordChar = true;
+            }
+        }
+
+        private void buttonCopyPincode_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetData(DataFormats.Text, textBoxPincode.Text);
+        }
     }
 }
