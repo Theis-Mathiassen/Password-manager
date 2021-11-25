@@ -52,7 +52,15 @@ namespace PasswordManager
 
         public static string GetLastPath()
         {
-            return CObject.LastPath.Path;
+            string result = "";
+            if (CObject.LastPath == null)
+            {
+                result = null;
+            } else
+            {
+                result = CObject.LastPath.Path;
+            }
+            return result;
         }
 
         public static string GetPreviousPath (string path)
@@ -80,7 +88,7 @@ namespace PasswordManager
             return listString;
         }
 
-        public static void AddPreviousPath(string path)
+        public static void AddPreviousPath(Form1 mainForm, string path)
         {
             
             SaveFileData fileData = CObject.PreviousPaths.Find(item => item.Path == path);
@@ -93,7 +101,7 @@ namespace PasswordManager
                 RemovePath(path);
                 CObject.PreviousPaths.Add(new SaveFileData(path));
             }
-            Program.mainForm.RecentToolStripMenuItemUpdateValues();
+            mainForm.RecentToolStripMenuItemUpdateValues();
         }
         public static void RemovePath(string path)
         {

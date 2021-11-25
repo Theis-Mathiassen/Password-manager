@@ -15,23 +15,26 @@ namespace PasswordManager
 {
     static class Program
     {
-        //internal const string MasterPassword = "Master";
-        static internal PasswordBook passwordBook;
-        //static internal string passwordListPath;
-        static internal Form1 mainForm;
+        
+        
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            Config.LoadFromFile();
-            passwordBook = new PasswordBook(null, null, "Empty");
-            
+            //static internal string passwordListPath;
+            Form1 mainForm;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             mainForm = new Form1();
-            mainForm.Text = passwordBook.GetName();
+
+            Config.LoadFromFile();
+            PasswordBook.Setup(mainForm, null, null, "Empty");
+            
+            
+            mainForm.Text = PasswordBook.GetName();
             Application.Run(mainForm);
 
             Config.SaveToFile();
@@ -97,33 +100,37 @@ namespace PasswordManager
     /// <summary>
     /// A collection of all passwords
     /// </summary>
-    public class PasswordBook
+    public static class PasswordBook
     {
+        //The form the passwordBook exists within
+        static Form1 mainForm;
         //Name of the passwordbook
-        private string BookName;
+        static private string BookName;
         //Indicates wether or not the Password book has been modified.
-        private bool modified;
+        static private bool modified;
         //The list of the passwords and attached information.
-        private List<Credential> passwordData;
+        static private List<Credential> passwordData;
         //The hashed password key used to decrypt passwords.
-        private byte[][] keys;
+        static private byte[][] keys;
         //The path of the file storing the passwords.
-        private string path;
+        static private string path;
 
-        public PasswordBook(string path, byte[][] keys, string BookName)
+        
+        public static void Setup(Form1 form, string newPath, byte[][] newKeys, string newBookName)
         {
+            mainForm = form;
             passwordData = new List<Credential>();
-            this.path = path;
-            this.keys = keys;
-            this.BookName = BookName;
+            path = newPath;
+            keys = newKeys;
+            BookName = newBookName;
         }
 
-        public void RemoveCredential (Credential credential)
+        public static void RemoveCredential (Credential credential)
         {
             passwordData.Remove(credential);
         }
 
-        public bool IsPathEmpty ()
+        public static bool IsPathEmpty ()
         {
             if (path == null)
             {
@@ -134,32 +141,32 @@ namespace PasswordManager
                 return false;
             }
         }
-        public void SetPath (string path)
+        public static void SetPath (string newPath)
         {
-            this.path = path;
+            path = newPath;
         }
-        public byte[][] GetMasterPassword ()
+        public static byte[][] GetMasterPassword ()
         {
             return keys;
         }
-        public void SetMasterPassword (byte[][] keys)
+        public static void SetMasterPassword (byte[][] newKeys)
         {
-            this.keys = keys;
+            keys = newKeys;
         }
-        
-        public string GetName ()
+
+        public static string GetName ()
         {
             return BookName;
         }
-        public bool IsModified ()
+        public static bool IsModified ()
         {
             return modified;
         }
-        public List<Credential> GetCredentials ()
+        public static List<Credential> GetCredentials ()
         {
             return passwordData;
         }
-        public int GetNewId ()
+        public static int GetNewId ()
         {
             int tempID = passwordData.Count;
             bool foundID = false;
@@ -188,45 +195,48 @@ namespace PasswordManager
             }
             return tempID;
         }
-        internal void AddPassword (string serviceName, string email, string password, string pincode, string URL, string note, bool expires, DateTime ExpiryDate)
+        internal static void AddPassword (string serviceName, string email, string password, string pincode, string URL, string note, bool expires, DateTime ExpiryDate)
         {
             modified = true;
             int id = GetNewId();
             passwordData.Add(new Credential(serviceName, email, password, pincode, note, id, URL, expires, ExpiryDate));
         }
-        
-        
-        internal void ClearPasswords ()
+
+
+        internal static void ClearPasswords ()
         {
             modified = true;
             passwordData.Clear();
         }
-        internal string SavePasswordsToJSON()
+        internal static string SavePasswordsToJSON()
         {
             string result = JsonConvert.SerializeObject(passwordData);
             return result;
         }
-        internal void LoadPasswordsFromJSON (string JSONString)
+        internal static void LoadPasswordsFromJSON (string JSONString)
         {
             passwordData = JsonConvert.DeserializeObject<List<Credential>>(JSONString);
         }
 
-        internal void SavePasswordsToFile()
+        internal static void SavePasswordsToFile()
         {
+
+            
             Config.SetLastPath(path);
-            Config.AddPreviousPath(path);
+            Config.AddPreviousPath(mainForm, path);
             BookName = Path.GetFileNameWithoutExtension(path);
-            Program.mainForm.Text = BookName;
+            mainForm.Text = BookName;
             string JSONText = SavePasswordsToJSON();
             string encryptedPasswords = SecurityController.Encrypt(keys, JSONText);
             //File.WriteAllText(path, JSONText);
             File.WriteAllText(path, encryptedPasswords);
 
         }
-        internal bool LoadPasswordsFromFile()
+        /* tries to load passwords from internal path, return true if success */
+        internal static bool LoadPasswordsFromFile()
         {
             BookName = Path.GetFileNameWithoutExtension(path);
-            Program.mainForm.Text = BookName;
+            mainForm.Text = BookName;
             bool result = true;
             ClearPasswords();
             modified = false;
