@@ -44,6 +44,7 @@ namespace PasswordManager
     public static class Config
     {
         static ConfigObject CObject = new ConfigObject();
+        static string localPathInSpecialFolder = @"PasswordManager\Configoration.JSON";
 
         public static void SetLastPath(string Path)
         {
@@ -67,6 +68,7 @@ namespace PasswordManager
         {
             return CObject.PreviousPaths.Find(item => item.Path == path).Path;
         }
+        /* Returns all the previous paths up to the specified amount in count */
         public static List<string> GetPreviousPath (int count)
         {
             List<string> listString = new List<string>();
@@ -112,7 +114,7 @@ namespace PasswordManager
         {
             try
             {
-                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), @"PasswordManager\Configoration.JSON");
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), localPathInSpecialFolder);
                 string JSONString = JsonConvert.SerializeObject(CObject);
                 Console.WriteLine("Path: {0}, JSON: {1}", path, JSONString);
                 //Create dir if does not exist.
@@ -137,7 +139,7 @@ namespace PasswordManager
         {
             try
             {
-                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), @"PasswordManager\Configoration.JSON");
+                string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), localPathInSpecialFolder);
                 string JSONString = File.ReadAllText(path);
                 CObject = JsonConvert.DeserializeObject<ConfigObject>(JSONString);
                 CObject.PreviousPaths.RemoveAll(item => item.Path == null);
@@ -146,7 +148,6 @@ namespace PasswordManager
             {
                 CObject = new ConfigObject();
             }
-            
         }
     }
 }
