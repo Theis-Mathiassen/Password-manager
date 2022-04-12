@@ -60,7 +60,7 @@ namespace PasswordManager
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
+            DialogResult = DialogResult.Cancel;
         }
 
         private void buttonShowHidePassword_Click(object sender, EventArgs e)

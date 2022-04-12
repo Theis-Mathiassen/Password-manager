@@ -22,10 +22,11 @@ namespace PasswordManager
         {
             InitializeComponent();
             RecentToolStripMenuItemUpdateValues();
+            
         }
         private void Form1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            /*
+            
             // Determine if text has changed in the textbox by comparing to original text.
             
             // Display a MsgBox asking the user to save changes or abort.
@@ -39,7 +40,7 @@ namespace PasswordManager
                 e.Cancel = true;
                 // Call method to save file...
             }
-            */
+            
         }
 
         public void RecentToolStripMenuItemUpdateValues ()
@@ -215,7 +216,8 @@ namespace PasswordManager
         }
         private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            LoadPasswords();
+            string path = FileManager.JSONFileFromFileExplorer();
+            LoadPasswords(path);
         }
         private void fileToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -285,24 +287,9 @@ namespace PasswordManager
                 InsertDataToGridView(PasswordBook.GetCredentials(), dataGridView1);
             }
         }
-        private void LoadPasswords(string passwordPath = "")
+        public void LoadPasswords(string passwordPath = "")
         {
-            if (!File.Exists(passwordPath) || !(Path.GetExtension(passwordPath) == ".JSON"))
-            {
-                using (OpenFileDialog openFileDialog = new OpenFileDialog())
-                {
-                    openFileDialog.InitialDirectory = LastOpened ?? "c:\\";
-                    openFileDialog.Filter = "JSON files (*.JSON)|*.JSON";
-                    openFileDialog.FilterIndex = 2;
-                    openFileDialog.RestoreDirectory = true;
-
-                    if (openFileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        //Get the path of specified file
-                        passwordPath = openFileDialog.FileName;
-                    }
-                }
-            }            
+                        
 
             if (File.Exists(passwordPath) && Path.GetExtension(passwordPath) == ".JSON")
             {
@@ -326,8 +313,12 @@ namespace PasswordManager
                         }
                     }
                 }
+            } else {
+                //Alert user path not existing.
             }
         }
+
+
         private void InsertDataToGridView (List<Credential> data, DataGridView gridView)
         {
             dataGridView1.Rows.Clear();
@@ -395,10 +386,7 @@ namespace PasswordManager
 
         private void Form1_Shown(object sender, EventArgs e)
         {
-            if (Config.GetLastPath() != null)
-            {
-                LoadPasswords(Config.GetLastPath());
-            }
+            
         }
     }
 }

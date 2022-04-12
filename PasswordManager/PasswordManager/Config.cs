@@ -34,6 +34,7 @@ namespace PasswordManager
         public DateTime usageTime;
     }
 
+    //A configuration object keeping track of The last saved path. And a list of previous used paths (Password books)
     public class ConfigObject
     {
         public List<SaveFileData> PreviousPaths = new List<SaveFileData>();
@@ -54,18 +55,15 @@ namespace PasswordManager
         public static string GetLastPath()
         {
             string result = "";
-            if (CObject.LastPath == null)
-            {
+            if (CObject.LastPath == null) {
                 result = null;
-            } else
-            {
+            } else {
                 result = CObject.LastPath.Path;
             }
             return result;
         }
 
-        public static string GetPreviousPath (string path)
-        {
+        public static string GetPreviousPath (string path) {
             return CObject.PreviousPaths.Find(item => item.Path == path).Path;
         }
         /* Returns all the previous paths up to the specified amount in count */

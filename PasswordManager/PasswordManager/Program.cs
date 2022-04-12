@@ -32,8 +32,12 @@ namespace PasswordManager
 
             Config.LoadFromFile();
             PasswordBook.Setup(mainForm, null, null, "Empty");
-            
-            
+
+            if (Config.GetLastPath() != null)
+            {
+                mainForm.LoadPasswords(Config.GetLastPath());
+            }
+
             mainForm.Text = PasswordBook.GetName();
             Application.Run(mainForm);
 
