@@ -23,6 +23,7 @@ namespace PasswordManager
         [STAThread]
         static void Main()
         {
+            Config.LoadFromFile();
             //static internal string passwordListPath;
             Form1 mainForm;
 
@@ -30,7 +31,7 @@ namespace PasswordManager
             Application.SetCompatibleTextRenderingDefault(false);
             mainForm = new Form1();
 
-            Config.LoadFromFile();
+            
             PasswordBook.Setup(mainForm, null, null, "Empty");
 
             if (Config.GetLastPath() != null)

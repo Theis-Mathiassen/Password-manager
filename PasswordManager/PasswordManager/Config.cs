@@ -45,7 +45,7 @@ namespace PasswordManager
     public static class Config
     {
         static ConfigObject CObject = new ConfigObject();
-        static string localPathInSpecialFolder = @"PasswordManager\Configoration.JSON";
+        static string localPathInSpecialFolder = @"PasswordManager\Config.JSON";
 
         public static void SetLastPath(string Path)
         {

@@ -10,13 +10,13 @@ using System.Windows.Forms;
 
 namespace PasswordManager
 {
-    public partial class PasswordConfigoration : Form
+    public partial class PasswordConfiguration : Form
     {
         public string Password
         {
             get { return textBoxPassword.Text; }
         }
-        public PasswordConfigoration(string password)
+        public PasswordConfiguration(string password)
         {
             InitializeComponent();
             textBoxPassword.Text = password;

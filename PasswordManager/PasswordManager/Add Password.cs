@@ -90,11 +90,11 @@ namespace PasswordManager
 
         private void buttonConfigurePassword_Click(object sender, EventArgs e)
         {
-            using (PasswordConfigoration passwordConfigoration = new PasswordConfigoration(textBoxPassword.Text))
+            using (PasswordConfiguration passwordConfiguration = new PasswordConfiguration(textBoxPassword.Text))
             {
-                if (passwordConfigoration.ShowDialog() == DialogResult.OK)
+                if (passwordConfiguration.ShowDialog() == DialogResult.OK)
                 {
-                    textBoxPassword.Text = passwordConfigoration.Password;
+                    textBoxPassword.Text = passwordConfiguration.Password;
                 }
             }
         }
